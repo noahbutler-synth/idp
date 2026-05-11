@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quanta Services — SDR One-Pager</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --indigo-500: #3E57DA;
+    --indigo-300: #8098F9;
+    --indigo-200: #BCD0FF;
+    --indigo-50:  #EEF3FF;
+    --indigo-900: #1A2254;
+    --ink-900:    #0D0F2C;
+    --gray-700:   #595959;
+    --gray-100:   #EEEEEE;
+    --white:      #FFFFFF;
+    --teal:       #0097A7;
+    --shadow-sm:  0 4px 16px rgba(13,15,44,.08);
+    --shadow-md:  0 8px 24px rgba(13,15,44,.15);
+    --radius:     12px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', Arial, sans-serif;
+    background: #F5F6FA;
+    color: var(--ink-900);
+    font-size: 14px;
+    line-height: 1.55;
+    min-height: 100vh;
+    padding: 32px 24px;
+  }
+  .page {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--ink-900);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    right: -60px; top: -60px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(62,87,218,.35) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-left { position: relative; z-index: 1; }
+  .header-eyebrow {
+    font-size: 11px; font-weight: 600; letter-spacing: .08em;
+    color: var(--indigo-300); text-transform: uppercase; margin-bottom: 6px;
+  }
+  .header-title {
+    font-size: 32px; font-weight: 700; color: var(--white);
+    line-height: 1.15; margin-bottom: 8px;
+  }
+  .header-title span { color: var(--indigo-300); }
+  .header-meta {
+    font-size: 12.5px; color: rgba(255,255,255,.55);
+    display: flex; flex-wrap: wrap; gap: 6px 14px;
+  }
+  .header-meta span { display: flex; align-items: center; gap: 4px; }
+  .header-meta span::before { content: '·'; color: var(--indigo-300); }
+  .header-meta span:first-child::before { display: none; }
+  .header-right { position: relative; z-index: 1; text-align: right; flex-shrink: 0; }
+  .badge {
+    display: inline-block;
+    background: rgba(62,87,218,.25);
+    border: 1px solid rgba(62,87,218,.5);
+    color: var(--indigo-200);
+    font-size: 10px; font-weight: 700;
+    letter-spacing: .1em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 99px;
+    margin-bottom: 8px;
+  }
+  .ae-label { font-size: 12px; color: rgba(255,255,255,.45); }
+  .ae-name { font-size: 13px; font-weight: 600; color: var(--white); }
+
+  /* ── METRICS BAR ── */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+  .metric {
+    padding: 18px 12px;
+    text-align: center;
+    border-right: 1px solid var(--gray-100);
+  }
+  .metric:last-child { border-right: none; }
+  .metric-num {
+    font-size: 22px; font-weight: 700;
+    color: var(--indigo-500); line-height: 1.1;
+    margin-bottom: 4px;
+  }
+  .metric-label {
+    font-size: 10.5px; color: var(--gray-700);
+    font-weight: 500; line-height: 1.3;
+  }
+
+  /* ── SECTION GRID ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .full-col { display: grid; grid-template-columns: 1fr; }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+  .card-header {
+    padding: 12px 20px;
+    background: var(--indigo-50);
+    border-bottom: 1px solid var(--indigo-200);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .card-header-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--indigo-500); flex-shrink: 0;
+  }
+  .card-title {
+    font-size: 11px; font-weight: 700;
+    color: var(--indigo-500); text-transform: uppercase; letter-spacing: .08em;
+  }
+  .card-body { padding: 16px 20px; }
+
+  /* ── HYPOTHESIS TABLE ── */
+  .hyp-table { width: 100%; border-collapse: collapse; }
+  .hyp-table thead th {
+    background: var(--ink-900); color: var(--white);
+    font-size: 10.5px; font-weight: 600; letter-spacing: .05em;
+    text-transform: uppercase; padding: 8px 10px; text-align: left;
+  }
+  .hyp-table tbody tr:nth-child(even) { background: var(--indigo-50); }
+  .hyp-table tbody tr:nth-child(odd)  { background: var(--white); }
+  .hyp-table td {
+    padding: 9px 10px; font-size: 12.5px;
+    color: var(--gray-700); vertical-align: top;
+    border-bottom: 1px solid var(--gray-100);
+  }
+  .hyp-table td:first-child { font-weight: 600; color: var(--ink-900); width: 22%; }
+  .hyp-table td:nth-child(2) { width: 42%; }
+  .hyp-table td:last-child   { font-size: 12px; color: var(--gray-700); }
+
+  /* ── CONTACTS TABLE ── */
+  .contacts-table { width: 100%; border-collapse: collapse; }
+  .contacts-scroll { max-height: 420px; overflow-y: auto; border-radius: 0 0 var(--radius) var(--radius); }
+  .contacts-table thead th {
+    background: var(--ink-900); color: var(--white);
+    font-size: 10.5px; font-weight: 600; letter-spacing: .05em;
+    text-transform: uppercase; padding: 8px 12px; text-align: left;
+  }
+  .contacts-table tbody tr:nth-child(even) { background: var(--gray-100); }
+  .contacts-table tbody tr:nth-child(odd)  { background: var(--white); }
+  .contacts-table td {
+    padding: 8px 12px; font-size: 12.5px;
+    color: var(--gray-700); vertical-align: top;
+    border-bottom: 1px solid var(--gray-100);
+  }
+  .contacts-table td:first-child { font-weight: 600; color: var(--ink-900); width: 22%; }
+  .contacts-table td:nth-child(2) { width: 30%; font-weight: 500; color: var(--indigo-900); }
+  .pill {
+    display: inline-block;
+    background: var(--indigo-50);
+    color: var(--indigo-500);
+    font-size: 10px; font-weight: 700;
+    letter-spacing: .06em; text-transform: uppercase;
+    padding: 2px 8px; border-radius: 99px;
+    border: 1px solid var(--indigo-200);
+    margin-top: 2px;
+  }
+  .pill-green {
+    background: #ECFDF5; color: #065F46;
+    border-color: #A7F3D0;
+  }
+  .pill-amber {
+    background: #FFFBEB; color: #92400E;
+    border-color: #FDE68A;
+  }
+
+  /* ── EMAIL BOX ── */
+  .email-box {
+    background: var(--indigo-50);
+    border-left: 4px solid var(--indigo-500);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 16px 18px;
+  }
+  .email-subject {
+    font-size: 13px; font-weight: 700; color: var(--ink-900); margin-bottom: 2px;
+  }
+  .email-to {
+    font-size: 11.5px; color: var(--gray-700); margin-bottom: 10px;
+  }
+  .email-body {
+    font-size: 12.5px; color: var(--indigo-900);
+    line-height: 1.65; font-style: italic;
+    white-space: pre-line;
+  }
+
+  /* ── CALL ROWS ── */
+  .call-row {
+    display: grid;
+    grid-template-columns: 130px 80px 1fr;
+    gap: 0;
+    border-bottom: 1px solid var(--gray-100);
+    align-items: start;
+  }
+  .call-row:last-child { border-bottom: none; }
+  .call-date {
+    padding: 10px 12px;
+    font-size: 11.5px; font-weight: 600; color: var(--ink-900);
+  }
+  .call-link {
+    display: inline-block;
+    margin-top: 4px;
+    font-size: 10px; font-weight: 600;
+    color: var(--indigo-500);
+    text-decoration: none;
+    letter-spacing: .03em;
+  }
+  .call-link:hover { text-decoration: underline; }
+  .call-who {
+    font-size: 10.5px; color: var(--gray-700); font-weight: 400; margin-top: 2px;
+  }
+  .call-score {
+    padding: 10px 8px;
+    font-size: 13px; color: var(--indigo-500);
+    letter-spacing: -1px;
+  }
+  .call-note {
+    padding: 10px 12px;
+    font-size: 12.5px; color: var(--gray-700); line-height: 1.55;
+  }
+  .call-row:nth-child(even) { background: var(--indigo-50); }
+  .call-row:nth-child(odd)  { background: var(--white); }
+
+  /* ── FOOTER ── */
+  .footer {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 0 0;
+    border-top: 1px solid var(--gray-100);
+    font-size: 11px; color: var(--gray-700);
+  }
+  .footer strong { color: var(--ink-900); }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .page { max-width: 100%; }
+    .site-nav { display: none; }
+  }
+  .site-nav { position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 1px solid var(--gray-100); display: flex; align-items: center; padding: 0 24px; }
+  .site-nav-home { font-size: 12px; font-weight: 600; color: var(--indigo-500); text-decoration: none; padding: 13px 16px 13px 0; border-right: 1px solid var(--gray-100); margin-right: 8px; flex-shrink: 0; }
+  .site-nav-home:hover { color: var(--indigo-900); }
+  .site-nav-tabs { display: flex; overflow-x: auto; }
+  .site-nav-tab { font-size: 12px; font-weight: 500; color: var(--gray-700); text-decoration: none; padding: 13px 14px; border-bottom: 2px solid transparent; white-space: nowrap; transition: color .15s; }
+  .site-nav-tab:hover { color: var(--ink-900); }
+  .site-nav-tab.active { color: var(--indigo-500); border-bottom-color: var(--indigo-500); font-weight: 600; }
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a class="site-nav-home" href="index.html">← Portfolio</a>
+  <div class="site-nav-tabs">
+    <a class="site-nav-tab active" href="Quanta_Services_SDR_One_Pager.html">Quanta Services</a>
+    <a class="site-nav-tab" href="Emerson_Electric_SDR_One_Pager.html">Emerson Electric</a>
+    <a class="site-nav-tab" href="World_Wide_Technology_SDR_One_Pager.html">World Wide Technology</a>
+    <a class="site-nav-tab" href="Standout_Meetings_SDR_One_Pager.html">Accomplishments</a>
+  </div>
+</nav>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <div class="header-eyebrow">SDR One-Pager</div>
+      <div class="header-title">Quanta <span>Services</span></div>
+      <div class="header-meta">
+        <span>Construction &amp; Engineering</span>
+        <span>$23B Revenue</span>
+        <span>58,400 employees</span>
+        <span>Houston, TX</span>
+        <span>Oct 2025 &ndash; May 2026</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="badge">Account One-Pager</div>
+      <div class="ae-label">Account Executive</div>
+      <div class="ae-name">Casey Masciantonio</div>
+    </div>
+  </div>
+
+  <!-- METRICS -->
+  <div class="metrics">
+    <div class="metric"><div class="metric-num">$92K</div><div class="metric-label">Total Closed Won</div></div>
+    <div class="metric"><div class="metric-num">$82.5K</div><div class="metric-label">Renewal in Pipeline</div></div>
+    <div class="metric"><div class="metric-num">$38K+</div><div class="metric-label">Upsell ARR Won</div></div>
+<div class="metric"><div class="metric-num">21</div><div class="metric-label">Meetings Booked</div></div>
+    <div class="metric"><div class="metric-num">20+</div><div class="metric-label">Subsidiaries Prospected</div></div>
+  </div>
+
+  <!-- PERSONA HYPOTHESES -->
+  <div class="card">
+    <div class="card-header"><div class="card-header-dot"></div><div class="card-title">Persona Hypotheses</div></div>
+    <div class="card-body" style="padding:0">
+      <table class="hyp-table">
+        <thead><tr><th>Persona</th><th>Pain Point Hypothesis</th><th>Angle Used</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Corporate Safety / Training Manager</td>
+            <td>Field crews need safety-critical content fast; traditional video takes weeks and one near-miss event can trigger an urgent need for scalable comms.</td>
+            <td>Used Quanta's own STKY safety events as context; highlighted speed-to-publish and AI avatar consistency across sites.</td>
+          </tr>
+          <tr>
+            <td>L&amp;D / Employee Development Lead</td>
+            <td>Onboarding dozens of new hires monthly across 200+ subsidiaries; static PDFs and PowerPoints don't scale and inconsistent delivery hurts retention.</td>
+            <td>Anchored to Scott Tunison's existing pilot as social proof; framed as "what if every operating company had this?"</td>
+          </tr>
+          <tr>
+            <td>HR / Training Admin (Subsidiary Level)</td>
+            <td>Subsidiary training teams often lack video production resources but need polished content to match parent-company standards.</td>
+            <td>Leveraged Quanta enterprise agreement as a halo: "your peers at Quanta HQ already have access, let me show you how they're using it."</td>
+          </tr>
+          <tr>
+            <td>AI / Digital Transformation Lead</td>
+            <td>Building a scalable AI-native comms stack; static content pipelines are a bottleneck for internal knowledge transfer.</td>
+            <td>Positioned Synthesia alongside their existing AI initiatives as a content layer, not just a training tool.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CONTACTS + EMAIL side by side -->
+  <div class="two-col">
+
+    <!-- CONTACTS -->
+    <div class="card" style="display:flex;flex-direction:column;height:100%">
+      <div class="card-header"><div class="card-header-dot"></div><div class="card-title">Key Contacts Booked</div></div>
+      <div class="card-body" style="padding:0;flex:1;display:flex;flex-direction:column">
+        <div class="contacts-scroll" style="max-height:none;flex:1">
+        <table class="contacts-table">
+          <thead><tr><th>Name</th><th>Title / Role</th><th>Method · Date</th></tr></thead>
+          <tbody>
+            <tr><td>Scott Tunison</td><td>L&amp;D Team Lead, Employee Development</td><td><span class="pill pill-green">Inbound</span> Email · Aug 6</td></tr>
+            <tr><td>Brandon Wylie</td><td>Regional Director, Training</td><td><span class="pill">LinkedIn → Call</span> · Aug 6</td></tr>
+            <tr><td>James Cobb</td><td>Manager, Safety</td><td><span class="pill">Call</span> · Oct 10</td></tr>
+            <tr><td>Stephen Reeves</td><td>Safety &amp; Training, Quanta ISG</td><td><span class="pill">Call</span> · Oct 13</td></tr>
+            <tr><td>Joshua Buttram</td><td>Team Lead, Region Safety (South)</td><td><span class="pill">Call</span> · Oct 13</td></tr>
+            <tr><td>James Rodney</td><td>Training Manager, Quanta Services</td><td><span class="pill">Call</span> · Oct 14</td></tr>
+            <tr><td>Brian Larue</td><td>Training &amp; Development, Quanta Services</td><td><span class="pill">Call</span> · Oct 21</td></tr>
+            <tr><td>James Wagoner</td><td>Safety Training, Quanta Services</td><td><span class="pill">Call</span> · Oct 21</td></tr>
+            <tr><td>Alex Lovell</td><td>L&amp;D, Quanta Services</td><td><span class="pill">Call</span> · Oct 23</td></tr>
+            <tr><td>Nicole Snyder</td><td>Senior Training Administrator, Mears (Quanta Sub)</td><td><span class="pill">Call</span> · Oct 28</td></tr>
+            <tr><td>Bruno Janota</td><td>Senior Director, AI Innovation &amp; Delivery</td><td><span class="pill">Email</span> · Oct 29</td></tr>
+            <tr><td>Sarah Miller</td><td>Senior Director of Talent Management, Quanta Services</td><td><span class="pill">Email</span> · Oct 29</td></tr>
+            <tr><td>Don Muzzy</td><td>Director, Apprenticeship &amp; Training, Brink (Quanta Sub)</td><td><span class="pill">Call</span> · Nov 3</td></tr>
+            <tr><td>Mitch Bradt</td><td>Director of Quality, Standards &amp; Training, Quanta ISG</td><td><span class="pill">Call</span> · Dec 4</td></tr>
+            <tr><td>Luke Naron</td><td>Regional Manager, Safety, IRBY</td><td><span class="pill">Call</span> · Dec 5</td></tr>
+            <tr><td>Ryan Schweitzer</td><td>Corporate Director, DOT Compliance, Quanta Services</td><td><span class="pill">Call</span> · Dec 10</td></tr>
+            <tr><td>Greg Stine</td><td>Director of Safety, Kwan Aviation (Quanta Sub)</td><td><span class="pill">Call</span> · Dec 15</td></tr>
+            <tr><td>Mike Ryan</td><td>Safety &amp; Training, Quanta Services</td><td><span class="pill">LinkedIn</span> · Dec 15</td></tr>
+            <tr><td>Lily Burton</td><td>Senior Director, Stronghold University</td><td><span class="pill">Email → Call</span> · Jan 15 &amp; Feb 2</td></tr>
+            <tr><td>Terence Louder</td><td>Director, Safety, Probst (Quanta Sub)</td><td><span class="pill">Call</span> · Jan 21</td></tr>
+            <tr><td>Amanda Bonfitto</td><td>Director, AI &amp; Machine Learning</td><td><span class="pill">Email</span> · Mar 23</td></tr>
+            <tr><td>Philip Petrozzi</td><td>VP Safety &amp; Training, PAR Electric</td><td><span class="pill">Call</span> · Mar 23 &nbsp;<span class="pill">Gong 5/5</span></td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- EMAIL + CALLS stacked -->
+    <div style="display:flex;flex-direction:column;gap:16px">
+
+      <!-- CALLS -->
+      <div class="card">
+        <div class="card-header"><div class="card-header-dot"></div><div class="card-title">Key Calls &amp; Discovery Highlights (Gong)</div></div>
+        <div class="card-body" style="padding:0">
+          <div class="call-row">
+            <div class="call-date">Jan 21, 2026<div class="call-who">Probst (Quanta Sub)<br>Terence Louder</div><a class="call-link" href="https://synthesia.app.gong.io/call?id=3124466691561818839" target="_blank">↗ Gong</a></div>
+            <div class="call-score">●●●●●</div>
+            <div class="call-note">18m · Director, Safety. Outdated onboarding video with old voiceover — clear upgrade candidate. Terence interested in AI-narrated module for new-hire safety onboarding. Demo follow-up confirmed.</div>
+          </div>
+          <div class="call-row">
+            <div class="call-date">Jan 15, 2026<div class="call-who">Stronghold (Quanta Sub)<br>Lily Burton</div><a class="call-link" href="https://synthesia.app.gong.io/call?id=5650922236610454759" target="_blank">↗ Gong</a></div>
+            <div class="call-score">●●●●●</div>
+            <div class="call-note">26m · Senior Director, Stronghold University. Current LMS (HASC) has 4–12 week content turnaround. Expressed strong interest in SCORM-compatible AI video. Demo scheduled with Blake Wilson &amp; Macy Simcoe.</div>
+          </div>
+          <div class="call-row">
+            <div class="call-date">Dec 15, 2025<div class="call-who">Kwan Aviation (Quanta Sub)<br>Greg Stine</div><a class="call-link" href="https://synthesia.app.gong.io/call?id=88033430103896026" target="_blank">↗ Gong</a></div>
+            <div class="call-score">●●●●○</div>
+            <div class="call-note">24m · Director of Safety. Positioned around FAA client-alignment training. Strong discovery — identified safety procedure videos as primary use case. Demo scheduled for January.</div>
+          </div>
+          <div class="call-row">
+            <div class="call-date">Dec 10, 2025<div class="call-who">Quanta Services HQ<br>Ryan Schweitzer</div><a class="call-link" href="https://synthesia.app.gong.io/call?id=8984407504266466659" target="_blank">↗ Gong</a></div>
+            <div class="call-score">●●●●○</div>
+            <div class="call-note">12m · Corporate Director, DOT Compliance. Field crews prefer hands-on training — Noah framed Synthesia as a supplement for pre/post classroom content. Open to January 28 demo.</div>
+          </div>
+          <div class="call-row">
+            <div class="call-date">Dec 5, 2025<div class="call-who">IRBY (Quanta Sub)<br>Luke Naron</div><a class="call-link" href="https://synthesia.app.gong.io/call?id=1059469335858763079" target="_blank">↗ Gong</a></div>
+            <div class="call-score">●●●●○</div>
+            <div class="call-note">16m · Regional Manager, Safety. Cornerstone LMS flagged as difficult to use. Text messaging most effective for content distribution to field crews — Noah identified mobile-first video as ideal fit.</div>
+          </div>
+          <div class="call-row">
+            <div class="call-date">Dec 4, 2025<div class="call-who">Quanta ISG<br>Mitch Bradt</div><a class="call-link" href="https://synthesia.app.gong.io/call?id=6083022074542274824" target="_blank">↗ Gong</a></div>
+            <div class="call-score">●●●●○</div>
+            <div class="call-note">11m · Director of Quality, Standards &amp; Training. Currently producing 10–20 hrs of content/year in Camtasia. Noah secured a live demo using Quanta ISG's own "Intro to Substations" content on Dec 8.</div>
+          </div>
+          <div class="call-row">
+            <div class="call-date">Nov 3, 2025<div class="call-who">Brink Construction (Quanta Sub)<br>Don Muzzy</div><a class="call-link" href="https://synthesia.app.gong.io/call?id=4352135368576969778" target="_blank">↗ Gong</a></div>
+            <div class="call-score">●●●●●</div>
+            <div class="call-note">30m · Director, Apprenticeship &amp; Training. "I'd be the guinea pig" — highest intent on any exploratory call. Estimated 6-seat initial deployment. Impressed by speed and quality of AI-generated content.</div>
+          </div>
+          <div class="call-row">
+            <div class="call-date">Oct 29, 2025<div class="call-who">Blattner (Quanta Sub)<br>Bruno Janota + Sarah Miller</div><a class="call-link" href="https://synthesia.app.gong.io/call?id=7225518376180710434" target="_blank">↗ Gong</a></div>
+            <div class="call-score">●●●○○</div>
+            <div class="call-note">19m · Sr. Director AI Innovation &amp; Sr. Director Talent. Quanta MSA still in negotiation — opco outreach was premature. Noah agreed to pause Blattner conversations; Bruno/Sarah to align with Scott Tunison on centralized rollout.</div>
+          </div>
+          <div class="call-row">
+            <div class="call-date">Oct 28, 2025<div class="call-who">Mears (Quanta Sub)<br>Nicole Snyder</div><a class="call-link" href="https://synthesia.app.gong.io/call?id=1445613851050446646" target="_blank">↗ Gong</a></div>
+            <div class="call-score">●●●●○</div>
+            <div class="call-note">24m · Training &amp; Reporting. Active EasyGenerator user; employee engagement is low. Noah demoed PDF-to-AI-video flow live. Multi-dialect Spanish needed (Puerto Rican, Latin American, Tex Mex) — Synthesia localization a clear differentiator. New AI Director to join next call.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EMAIL -->
+      <div class="card">
+        <div class="card-header"><div class="card-header-dot"></div><div class="card-title">Standout Outreach Email</div></div>
+        <div class="card-body">
+          <div class="email-box">
+            <div class="email-subject">Synthesia &lt;&gt; Quanta (Canacre) partner</div>
+            <div class="email-to">To: Jennifer Pape, HR &amp; Training Lead, Canacre (Quanta Subsidiary)</div>
+            <div class="email-body">Hi Jennifer,
+
+Hope you're doing well. I noticed you had created a Synthesia account previously, so I wanted to reach out as there have been a few updates since then. We've recently finalized a broader enterprise partnership with Quanta Services, and several operating companies are now starting to use Synthesia to scale internal training and communications.
+
+Given your role leading HR and training initiatives at Canacre, I thought it might be relevant — especially for things like onboarding, policy updates, leadership training, or communicating changes across teams.
+
+If there's still any interest on your side, I'd be happy to reconnect and show how other Quanta subsidiaries are using Synthesia today.
+
+Best, Noah</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <span><strong>Noah Butler</strong> &middot; Senior SDR, Synthesia &middot; noah.butler@synthesia.io</span>
+    <span><strong>Quanta Services One-Pager</strong> &middot; Promotion Portfolio &middot; May 2026</span>
+  </div>
+
+</div>
+</body>
+</html>

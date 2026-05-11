@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Noah Butler — Performance Highlights</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --indigo-500: #3E57DA;
+    --indigo-300: #8098F9;
+    --indigo-200: #BCD0FF;
+    --indigo-50:  #EEF3FF;
+    --indigo-900: #1A2254;
+    --ink-900:    #0D0F2C;
+    --gray-700:   #595959;
+    --gray-200:   #DDDDDD;
+    --gray-100:   #EEEEEE;
+    --white:      #FFFFFF;
+    --shadow-sm:  0 4px 16px rgba(13,15,44,.08);
+    --shadow-md:  0 8px 28px rgba(13,15,44,.15);
+    --radius:     12px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', Arial, sans-serif;
+    background: #F5F6FA;
+    color: var(--ink-900);
+    font-size: 14px;
+    line-height: 1.55;
+    padding: 40px 24px;
+  }
+  .page { max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--ink-900);
+    border-radius: var(--radius);
+    padding: 32px 40px;
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+    position: relative; overflow: hidden;
+  }
+  .header::before {
+    content: ''; position: absolute; right: -60px; top: -60px;
+    width: 300px; height: 300px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(62,87,218,.35) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header::after {
+    content: ''; position: absolute; left: 35%; bottom: -70px;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(128,152,249,.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-left { position: relative; z-index: 1; }
+  .header-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .08em; color: var(--indigo-300); text-transform: uppercase; margin-bottom: 8px; }
+  .header-title { font-size: 32px; font-weight: 700; color: var(--white); line-height: 1.15; margin-bottom: 10px; }
+  .header-title span { color: var(--indigo-300); }
+  .header-sub { font-size: 13px; color: rgba(255,255,255,.5); max-width: 520px; line-height: 1.65; }
+  .header-right { position: relative; z-index: 1; text-align: right; flex-shrink: 0; }
+  .badge { display: inline-block; background: rgba(62,87,218,.25); border: 1px solid rgba(62,87,218,.5); color: var(--indigo-200); font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 4px 12px; border-radius: 99px; margin-bottom: 8px; }
+  .header-name { font-size: 16px; font-weight: 700; color: var(--white); }
+  .header-role { font-size: 12px; color: rgba(255,255,255,.4); margin-top: 3px; }
+
+  /* ── OVERALL METRICS STRIP ── */
+  .metrics-strip {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+  .metric-cell {
+    padding: 20px 16px;
+    text-align: center;
+    border-right: 1px solid var(--gray-100);
+  }
+  .metric-cell:last-child { border-right: none; }
+  .metric-num { font-size: 26px; font-weight: 700; color: var(--indigo-500); line-height: 1; margin-bottom: 5px; }
+  .metric-num.green { color: #059669; }
+  .metric-label { font-size: 10.5px; color: var(--gray-700); font-weight: 500; line-height: 1.35; }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--gray-700); padding: 0 4px;
+  }
+
+  /* ── QUARTERLY PERFORMANCE CARDS ── */
+  .qtr-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .qtr-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .qtr-top {
+    background: var(--ink-900);
+    padding: 18px 20px 14px;
+    position: relative; overflow: hidden;
+  }
+  .qtr-top::before {
+    content: ''; position: absolute; right: -16px; top: -16px;
+    width: 100px; height: 100px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(62,87,218,.3) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .qtr-eyebrow { font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--indigo-300); margin-bottom: 4px; position: relative; z-index: 1; }
+  .qtr-attainment { font-size: 34px; font-weight: 700; color: var(--white); line-height: 1; position: relative; z-index: 1; }
+  .qtr-attainment span { font-size: 14px; font-weight: 500; color: rgba(255,255,255,.5); margin-left: 4px; }
+
+  .qtr-body { padding: 14px 20px 18px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+  .qtr-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .qtr-stat-num { font-size: 18px; font-weight: 700; color: var(--indigo-500); line-height: 1; }
+  .qtr-stat-label { font-size: 10px; color: var(--gray-700); font-weight: 500; margin-top: 2px; }
+  .qtr-pipeline { font-size: 12px; color: var(--gray-700); border-top: 1px solid var(--gray-100); padding-top: 10px; margin-top: 2px; }
+  .qtr-pipeline strong { color: var(--ink-900); }
+
+  .qtr-link {
+    display: block;
+    margin-top: auto;
+    padding: 10px 20px;
+    background: var(--indigo-50);
+    border-top: 1px solid var(--indigo-200);
+    font-size: 12px; font-weight: 600; color: var(--indigo-500);
+    text-decoration: none;
+    text-align: center;
+    transition: background .15s;
+  }
+  .qtr-link:hover { background: var(--indigo-200); }
+  .qtr-link::after { content: ' ↗'; }
+
+  /* ── STANDOUT ACCOUNT CARDS ── */
+  .accounts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 640px) { .accounts-grid { grid-template-columns: 1fr; } .qtr-grid { grid-template-columns: 1fr; } .metrics-strip { grid-template-columns: repeat(2, 1fr); } }
+
+  .account-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .card-top {
+    background: var(--ink-900);
+    padding: 18px 22px 14px;
+    position: relative; overflow: hidden;
+  }
+  .card-top::before {
+    content: ''; position: absolute; right: -18px; top: -18px;
+    width: 110px; height: 110px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(62,87,218,.3) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .card-industry { font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--indigo-300); margin-bottom: 4px; position: relative; z-index: 1; }
+  .card-company { font-size: 20px; font-weight: 700; color: var(--white); position: relative; z-index: 1; }
+
+  .card-body { padding: 16px 22px 18px; flex: 1; display: flex; flex-direction: column; gap: 12px; }
+
+  .card-arr {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  }
+  .arr-num { font-size: 22px; font-weight: 700; color: var(--indigo-500); line-height: 1; }
+  .arr-sublabel { font-size: 10px; color: var(--gray-700); font-weight: 500; }
+  .arr-stage {
+    display: inline-block;
+    font-size: 10px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 99px;
+  }
+  .arr-stage.negotiation { background: #ECFDF5; color: #065F46; border: 1px solid #A7F3D0; }
+  .arr-stage.qualified    { background: var(--indigo-50); color: var(--indigo-500); border: 1px solid var(--indigo-200); }
+  .arr-stage.government   { background: #FFF7ED; color: #92400E; border: 1px solid #FDE68A; }
+
+  .card-detail { font-size: 12.5px; color: var(--gray-700); line-height: 1.65; }
+  .card-detail strong { color: var(--ink-900); font-weight: 600; }
+
+  .card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+  .tag {
+    display: inline-block; background: var(--indigo-50); color: var(--indigo-500);
+    font-size: 10px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 99px; border: 1px solid var(--indigo-200);
+  }
+  .tag-green { background: #ECFDF5; color: #065F46; border-color: #A7F3D0; }
+  .tag-amber { background: #FFFBEB; color: #92400E; border-color: #FDE68A; }
+
+  /* ── FOOTER ── */
+  .footer {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 4px 0; border-top: 1px solid var(--gray-100);
+    font-size: 11px; color: var(--gray-700);
+  }
+  .footer strong { color: var(--ink-900); }
+  .site-nav { position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 1px solid var(--gray-100); display: flex; align-items: center; padding: 0 24px; }
+  .site-nav-home { font-size: 12px; font-weight: 600; color: var(--indigo-500); text-decoration: none; padding: 13px 16px 13px 0; border-right: 1px solid var(--gray-100); margin-right: 8px; flex-shrink: 0; }
+  .site-nav-home:hover { color: var(--indigo-900); }
+  .site-nav-tabs { display: flex; overflow-x: auto; }
+  .site-nav-tab { font-size: 12px; font-weight: 500; color: var(--gray-700); text-decoration: none; padding: 13px 14px; border-bottom: 2px solid transparent; white-space: nowrap; transition: color .15s; }
+  .site-nav-tab:hover { color: var(--ink-900); }
+  .site-nav-tab.active { color: var(--indigo-500); border-bottom-color: var(--indigo-500); font-weight: 600; }
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a class="site-nav-home" href="index.html">← Portfolio</a>
+  <div class="site-nav-tabs">
+    <a class="site-nav-tab" href="Quanta_Services_SDR_One_Pager.html">Quanta Services</a>
+    <a class="site-nav-tab" href="Emerson_Electric_SDR_One_Pager.html">Emerson Electric</a>
+    <a class="site-nav-tab" href="World_Wide_Technology_SDR_One_Pager.html">World Wide Technology</a>
+    <a class="site-nav-tab active" href="Standout_Meetings_SDR_One_Pager.html">Accomplishments</a>
+  </div>
+</nav>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <div class="header-eyebrow">SDR Portfolio</div>
+      <div class="header-title">Performance <span>Highlights</span></div>
+      <div class="header-sub">Three consecutive quarters at 150%+ to quota, $2.8M+ pipeline generated, and standout accounts across healthcare, pharma, government, and medtech</div>
+    </div>
+    <div class="header-right">
+      <div class="badge">May 2026</div>
+      <div class="header-name">Noah Butler</div>
+      <div class="header-role">Senior SDR &middot; Synthesia</div>
+    </div>
+  </div>
+
+  <!-- OVERALL METRICS STRIP -->
+  <div class="metrics-strip">
+    <div class="metric-cell">
+      <div class="metric-num">3×</div>
+      <div class="metric-label">Consecutive Quarters at 150%+ to Quota</div>
+    </div>
+    <div class="metric-cell">
+      <div class="metric-num">174</div>
+      <div class="metric-label">Total Opportunities Created (Q3–Q1)</div>
+    </div>
+    <div class="metric-cell">
+      <div class="metric-num">138</div>
+      <div class="metric-label">SQOs Generated Across Three Quarters</div>
+    </div>
+    <div class="metric-cell">
+      <div class="metric-num">$2.8M</div>
+      <div class="metric-label">Total Pipeline Generated (Q3–Q1)</div>
+    </div>
+    <div class="metric-cell">
+      <div class="metric-num green">$174K</div>
+      <div class="metric-label">Closed Won ARR (Q1 2026 Alone)</div>
+    </div>
+  </div>
+
+  <!-- QUARTERLY QBR CARDS -->
+  <div class="section-label">Quarterly Business Reviews</div>
+  <div class="qtr-grid">
+
+    <div class="qtr-card">
+      <div class="qtr-top">
+        <div class="qtr-eyebrow">Q3 2025 &middot; 155.56% to Plan</div>
+        <div class="qtr-attainment">155%<span>to quota</span></div>
+      </div>
+      <div class="qtr-body">
+        <div class="qtr-stats">
+          <div><div class="qtr-stat-num">59</div><div class="qtr-stat-label">Opps Created</div></div>
+          <div><div class="qtr-stat-num">42</div><div class="qtr-stat-label">SQOs</div></div>
+          <div><div class="qtr-stat-num">71%</div><div class="qtr-stat-label">Opp → SQO Rate</div></div>
+          <div><div class="qtr-stat-num">75%</div><div class="qtr-stat-label">Outbound Mix</div></div>
+        </div>
+        <div class="qtr-pipeline"><strong>$1.27M</strong> pipeline generated &middot; IQVIA, Army, FAA, Highmark, WWT, Quanta anchored as top SQOs</div>
+        <a class="qtr-link" href="https://docs.google.com/presentation/d/10RClwHXTzM1PZoN4_JNO9P303ekRrJZnsBe-NXT8WWs/edit" target="_blank">View Q3 QBR Deck</a>
+      </div>
+    </div>
+
+    <div class="qtr-card">
+      <div class="qtr-top">
+        <div class="qtr-eyebrow">Q4 2025 &middot; 150% to Quota</div>
+        <div class="qtr-attainment">150%<span>to quota</span></div>
+      </div>
+      <div class="qtr-body">
+        <div class="qtr-stats">
+          <div><div class="qtr-stat-num">58</div><div class="qtr-stat-label">Opps Created</div></div>
+          <div><div class="qtr-stat-num">48</div><div class="qtr-stat-label">SQOs</div></div>
+          <div><div class="qtr-stat-num">74%</div><div class="qtr-stat-label">Opp → SQO Rate</div></div>
+          <div><div class="qtr-stat-num">81%</div><div class="qtr-stat-label">Outbound Mix</div></div>
+        </div>
+        <div class="qtr-pipeline"><strong>$819K</strong> pipeline generated &middot; Oct 191%, Nov 127%, Dec 130% to monthly targets &middot; AE collab drove 14 SQOs in one motion</div>
+        <a class="qtr-link" href="https://docs.google.com/presentation/d/15vmmUkKa2w9XpfT6icFRMZQkxXGKV5HYl7_4RdKdmXk/edit" target="_blank">View Q4 QBR Deck</a>
+      </div>
+    </div>
+
+    <div class="qtr-card">
+      <div class="qtr-top">
+        <div class="qtr-eyebrow">Q1 2026 &middot; 150% to Quota</div>
+        <div class="qtr-attainment">150%<span>to quota</span></div>
+      </div>
+      <div class="qtr-body">
+        <div class="qtr-stats">
+          <div><div class="qtr-stat-num">57</div><div class="qtr-stat-label">Opps Created</div></div>
+          <div><div class="qtr-stat-num">48</div><div class="qtr-stat-label">SQOs</div></div>
+          <div><div class="qtr-stat-num">75%</div><div class="qtr-stat-label">Opp → SQO Rate</div></div>
+          <div><div class="qtr-stat-num">93%</div><div class="qtr-stat-label">Outbound Mix</div></div>
+        </div>
+        <div class="qtr-pipeline"><strong>$685K</strong> pipeline &middot; <strong>$174K</strong> closed won &middot; Jan 136%, Feb 130%, Mar 182% to monthly targets</div>
+        <a class="qtr-link" href="https://docs.google.com/presentation/d/1dC9d1VO_CSzQwVWyatHR0UsZpp24VAgPBrLVCx_m5aM/edit" target="_blank">View Q1 QBR Deck</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- STANDOUT ACCOUNTS -->
+  <div class="section-label">Standout Accounts</div>
+  <div class="accounts-grid">
+
+    <!-- HIGHMARK HEALTH -->
+    <div class="account-card">
+      <div class="card-top">
+        <div class="card-industry">Healthcare &amp; Insurance</div>
+        <div class="card-company">Highmark Health</div>
+      </div>
+      <div class="card-body">
+        <div class="card-arr">
+          <div>
+            <div class="arr-num">$126,960</div>
+            <div class="arr-sublabel">Active ARR</div>
+          </div>
+          <span class="arr-stage negotiation">Negotiation</span>
+        </div>
+        <div class="card-detail">
+          <strong>Largest active deal outside the core three accounts</strong>, currently in Negotiation with a May 2026 close date. Sourced through intent-based outreach and named as a top SQO in the Q3 2025 QBR — progressed from cold outbound through discovery, scoping, and into final negotiation.
+        </div>
+        <div class="card-tags">
+          <span class="tag tag-green">Negotiation Stage</span>
+          <span class="tag">Close May '26</span>
+          <span class="tag">Intent-Sourced</span>
+          <span class="tag">Q3 QBR Top SQO</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- IQVIA -->
+    <div class="account-card">
+      <div class="card-top">
+        <div class="card-industry">Pharma &amp; Clinical Research</div>
+        <div class="card-company">IQVIA Holdings</div>
+      </div>
+      <div class="card-body">
+        <div class="card-arr">
+          <div>
+            <div class="arr-num">$79,200</div>
+            <div class="arr-sublabel">Active ARR</div>
+          </div>
+          <span class="arr-stage negotiation">Negotiation</span>
+        </div>
+        <div class="card-detail">
+          Q3 QBR top SQO — Mark Busuttil, Director of Operations, sourced via intent dashboard and email. <strong>$75K, 10-seat deal</strong> progressed through multi-threading across the org. Standout example of leveraging non-ICP conversations and research to find the right champion and run a high-quality structured discovery.
+        </div>
+        <div class="card-tags">
+          <span class="tag tag-green">Negotiation Stage</span>
+          <span class="tag">Q3 QBR Top SQO</span>
+          <span class="tag">Intent-Sourced</span>
+          <span class="tag">Multi-Threaded</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- BD -->
+    <div class="account-card">
+      <div class="card-top">
+        <div class="card-industry">Medical Technology</div>
+        <div class="card-company">BD (Becton Dickinson)</div>
+      </div>
+      <div class="card-body">
+        <div class="card-arr">
+          <div>
+            <div class="arr-num">$80,000+</div>
+            <div class="arr-sublabel">Active Pipeline</div>
+          </div>
+          <span class="arr-stage qualified">Qualified</span>
+        </div>
+        <div class="card-detail">
+          Multi-threaded across <strong>Product Comms, Sales Enablement, and Corporate Communications</strong> — 8+ individual contacts engaged including Allison, Alyssa, Jeannine, and others. Two active Qualified opps currently open. Demonstrates deep org mapping and persistence in a complex medtech enterprise.
+        </div>
+        <div class="card-tags">
+          <span class="tag">8+ Contacts</span>
+          <span class="tag">2 Active Opps</span>
+          <span class="tag">Multi-Threaded</span>
+          <span class="tag">Medtech Vertical</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- US GOVERNMENT -->
+    <div class="account-card">
+      <div class="card-top">
+        <div class="card-industry">Government &amp; Defense</div>
+        <div class="card-company">US Government</div>
+      </div>
+      <div class="card-body">
+        <div class="card-arr">
+          <div>
+            <div class="arr-num">$200,000+</div>
+            <div class="arr-sublabel">Active Pipeline</div>
+          </div>
+          <span class="arr-stage government">5 Active Opps</span>
+        </div>
+        <div class="card-detail">
+          Built a government vertical from scratch across <strong>US Army Corps of Engineers, MedCoE, SMC, Military Health System, and FAA</strong> — 5 active Qualified opps, 10+ contacts. Navigated slow procurement cycles and escalated to the Head of All Courses at MedCoE. Named Q3 QBR top SQO territory alongside Highmark and IQVIA.
+        </div>
+        <div class="card-tags">
+          <span class="tag tag-amber">Gov Vertical</span>
+          <span class="tag">USACE · MedCoE · FAA</span>
+          <span class="tag">5 Active Opps</span>
+          <span class="tag">Q3 QBR Top SQO</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <span><strong>Noah Butler</strong> &middot; Senior SDR, Synthesia &middot; noah.butler@synthesia.io</span>
+    <span>Performance Highlights &middot; May 2026</span>
+  </div>
+
+</div>
+</body>
+</html>

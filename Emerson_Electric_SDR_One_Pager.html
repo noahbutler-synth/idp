@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emerson Electric — SDR One-Pager</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --indigo-500: #3E57DA;
+    --indigo-300: #8098F9;
+    --indigo-200: #BCD0FF;
+    --indigo-50:  #EEF3FF;
+    --indigo-900: #1A2254;
+    --ink-900:    #0D0F2C;
+    --gray-700:   #595959;
+    --gray-100:   #EEEEEE;
+    --white:      #FFFFFF;
+    --teal:       #0097A7;
+    --shadow-sm:  0 4px 16px rgba(13,15,44,.08);
+    --shadow-md:  0 8px 24px rgba(13,15,44,.15);
+    --radius:     12px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', Arial, sans-serif;
+    background: #F5F6FA;
+    color: var(--ink-900);
+    font-size: 14px;
+    line-height: 1.55;
+    min-height: 100vh;
+    padding: 32px 24px;
+  }
+  .page { max-width: 960px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+
+  .header {
+    background: linear-gradient(135deg, var(--ink-900) 0%, #1a2254 100%);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+    position: relative; overflow: hidden;
+  }
+  .header::after {
+    content: '';
+    position: absolute; right: 80px; top: -40px;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(62,87,218,.4) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header::before {
+    content: '';
+    position: absolute; right: -20px; bottom: -40px;
+    width: 160px; height: 160px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,151,167,.25) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-left { position: relative; z-index: 1; }
+  .header-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .08em; color: var(--indigo-300); text-transform: uppercase; margin-bottom: 6px; }
+  .header-title { font-size: 32px; font-weight: 700; color: var(--white); line-height: 1.15; margin-bottom: 8px; }
+  .header-title span { color: var(--indigo-300); }
+  .header-meta { font-size: 12.5px; color: rgba(255,255,255,.55); display: flex; flex-wrap: wrap; gap: 6px 14px; }
+  .header-meta span::before { content: '·'; color: var(--indigo-300); margin-right: 14px; }
+  .header-meta span:first-child::before { display: none; }
+  .header-right { position: relative; z-index: 1; text-align: right; flex-shrink: 0; }
+  .badge { display: inline-block; background: rgba(62,87,218,.25); border: 1px solid rgba(62,87,218,.5); color: var(--indigo-200); font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 4px 10px; border-radius: 99px; margin-bottom: 8px; }
+  .ae-label { font-size: 12px; color: rgba(255,255,255,.45); }
+  .ae-name { font-size: 13px; font-weight: 600; color: var(--white); }
+
+  .metrics { display: grid; grid-template-columns: repeat(6, 1fr); background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow-sm); overflow: hidden; }
+  .metric { padding: 18px 12px; text-align: center; border-right: 1px solid var(--gray-100); }
+  .metric:last-child { border-right: none; }
+  .metric-num { font-size: 22px; font-weight: 700; color: var(--indigo-500); line-height: 1.1; margin-bottom: 4px; }
+  .metric-label { font-size: 10.5px; color: var(--gray-700); font-weight: 500; line-height: 1.3; }
+  .metric-num.highlight { color: #065F46; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  .card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow-sm); overflow: hidden; }
+  .card-header { padding: 12px 20px; background: var(--indigo-50); border-bottom: 1px solid var(--indigo-200); display: flex; align-items: center; gap: 8px; }
+  .card-header-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--indigo-500); flex-shrink: 0; }
+  .card-title { font-size: 11px; font-weight: 700; color: var(--indigo-500); text-transform: uppercase; letter-spacing: .08em; }
+  .card-body { padding: 16px 20px; }
+
+  .hyp-table { width: 100%; border-collapse: collapse; }
+  .hyp-table thead th { background: var(--ink-900); color: var(--white); font-size: 10.5px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; padding: 8px 10px; text-align: left; }
+  .hyp-table tbody tr:nth-child(even) { background: var(--indigo-50); }
+  .hyp-table tbody tr:nth-child(odd)  { background: var(--white); }
+  .hyp-table td { padding: 9px 10px; font-size: 12.5px; color: var(--gray-700); vertical-align: top; border-bottom: 1px solid var(--gray-100); }
+  .hyp-table td:first-child { font-weight: 600; color: var(--ink-900); width: 22%; }
+  .hyp-table td:nth-child(2) { width: 42%; }
+
+  .contacts-table { width: 100%; border-collapse: collapse; }
+  .contacts-table thead th { background: var(--ink-900); color: var(--white); font-size: 10.5px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; padding: 8px 12px; text-align: left; }
+  .contacts-table tbody tr:nth-child(even) { background: var(--gray-100); }
+  .contacts-table tbody tr:nth-child(odd)  { background: var(--white); }
+  .contacts-table td { padding: 7px 12px; font-size: 12px; color: var(--gray-700); vertical-align: top; border-bottom: 1px solid var(--gray-100); }
+  .contacts-table td:first-child { font-weight: 600; color: var(--ink-900); width: 24%; }
+  .contacts-table td:nth-child(2) { width: 32%; font-weight: 500; color: var(--indigo-900); }
+  .pill { display: inline-block; background: var(--indigo-50); color: var(--indigo-500); font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 2px 8px; border-radius: 99px; border: 1px solid var(--indigo-200); margin-top: 2px; }
+  .pill-green { background: #ECFDF5; color: #065F46; border-color: #A7F3D0; }
+
+  .email-box { background: var(--indigo-50); border-left: 4px solid var(--indigo-500); border-radius: 0 var(--radius) var(--radius) 0; padding: 16px 18px; }
+  .email-subject { font-size: 13px; font-weight: 700; color: var(--ink-900); margin-bottom: 2px; }
+  .email-to { font-size: 11.5px; color: var(--gray-700); margin-bottom: 10px; }
+  .email-body { font-size: 12.5px; color: var(--indigo-900); line-height: 1.65; font-style: italic; white-space: pre-line; }
+
+  .call-row { display: grid; grid-template-columns: 130px 80px 1fr; border-bottom: 1px solid var(--gray-100); align-items: start; }
+  .call-row:last-child { border-bottom: none; }
+  .call-date { padding: 10px 12px; font-size: 11.5px; font-weight: 600; color: var(--ink-900); }
+  .call-link { display: inline-block; margin-top: 4px; font-size: 10px; font-weight: 600; color: var(--indigo-500); text-decoration: none; letter-spacing: .03em; }
+  .call-link:hover { text-decoration: underline; }
+  .call-who { font-size: 10.5px; color: var(--gray-700); font-weight: 400; margin-top: 2px; }
+  .call-score { padding: 10px 8px; font-size: 13px; color: var(--indigo-500); letter-spacing: -1px; }
+  .call-note { padding: 10px 12px; font-size: 12.5px; color: var(--gray-700); line-height: 1.55; }
+  .call-row:nth-child(even) { background: var(--indigo-50); }
+  .call-row:nth-child(odd)  { background: var(--white); }
+
+  /* Pilot highlight banner */
+  .pilot-banner {
+    background: linear-gradient(135deg, #065F46, #047857);
+    border-radius: var(--radius);
+    padding: 16px 24px;
+    display: flex; align-items: center; gap: 20px;
+    color: white;
+  }
+  .pilot-stat { text-align: center; flex-shrink: 0; }
+  .pilot-stat-num { font-size: 36px; font-weight: 700; line-height: 1; }
+  .pilot-stat-label { font-size: 10.5px; font-weight: 600; opacity: .8; letter-spacing: .06em; text-transform: uppercase; }
+  .pilot-divider { width: 1px; background: rgba(255,255,255,.25); align-self: stretch; }
+  .pilot-text { font-size: 13px; line-height: 1.6; opacity: .92; }
+  .pilot-text strong { color: #6EE7B7; }
+
+  .footer { display: flex; justify-content: space-between; align-items: center; padding: 12px 0 0; border-top: 1px solid var(--gray-100); font-size: 11px; color: var(--gray-700); }
+  .footer strong { color: var(--ink-900); }
+
+  @media print { body { background: white; padding: 0; } .page { max-width: 100%; } .site-nav { display: none; } }
+  .site-nav { position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 1px solid var(--gray-100); display: flex; align-items: center; padding: 0 24px; }
+  .site-nav-home { font-size: 12px; font-weight: 600; color: var(--indigo-500); text-decoration: none; padding: 13px 16px 13px 0; border-right: 1px solid var(--gray-100); margin-right: 8px; flex-shrink: 0; }
+  .site-nav-home:hover { color: var(--indigo-900); }
+  .site-nav-tabs { display: flex; overflow-x: auto; }
+  .site-nav-tab { font-size: 12px; font-weight: 500; color: var(--gray-700); text-decoration: none; padding: 13px 14px; border-bottom: 2px solid transparent; white-space: nowrap; transition: color .15s; }
+  .site-nav-tab:hover { color: var(--ink-900); }
+  .site-nav-tab.active { color: var(--indigo-500); border-bottom-color: var(--indigo-500); font-weight: 600; }
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a class="site-nav-home" href="index.html">← Portfolio</a>
+  <div class="site-nav-tabs">
+    <a class="site-nav-tab" href="Quanta_Services_SDR_One_Pager.html">Quanta Services</a>
+    <a class="site-nav-tab active" href="Emerson_Electric_SDR_One_Pager.html">Emerson Electric</a>
+    <a class="site-nav-tab" href="World_Wide_Technology_SDR_One_Pager.html">World Wide Technology</a>
+    <a class="site-nav-tab" href="Standout_Meetings_SDR_One_Pager.html">Accomplishments</a>
+  </div>
+</nav>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <div class="header-eyebrow">SDR One-Pager</div>
+      <div class="header-title">Emerson <span>Electric</span></div>
+      <div class="header-meta">
+        <span>Manufacturing &amp; Industrial Automation</span>
+        <span>$17B Revenue</span>
+        <span>85,500 employees</span>
+        <span>St. Louis, MO</span>
+        <span>Aug 2025 &ndash; Apr 2026</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="badge">Account One-Pager</div>
+      <div class="ae-label">Account Executive</div>
+      <div class="ae-name">Casey Masciantonio</div>
+    </div>
+  </div>
+
+  <!-- METRICS -->
+  <div class="metrics">
+    <div class="metric"><div class="metric-num highlight">95</div><div class="metric-label">Pilot Kickoff Attendees</div></div>
+    <div class="metric"><div class="metric-num">19</div><div class="metric-label">Meetings Booked</div></div>
+    <div class="metric"><div class="metric-num">14+</div><div class="metric-label">Opps Created</div></div>
+    <div class="metric"><div class="metric-num">7</div><div class="metric-label">Departments Penetrated</div></div>
+    <div class="metric"><div class="metric-num">$70K</div><div class="metric-label">Active Opp ARR</div></div>
+    <div class="metric"><div class="metric-num">CPO</div><div class="metric-label">Executive Sponsor Secured</div></div>
+  </div>
+
+  <!-- PILOT BANNER -->
+  <div class="pilot-banner">
+    <div class="pilot-stat">
+      <div class="pilot-stat-num">95</div>
+      <div class="pilot-stat-label">People at Kickoff</div>
+    </div>
+    <div class="pilot-divider"></div>
+    <div class="pilot-text">
+      <strong>April 30, 2026 &mdash; CPO-sponsored enterprise pilot launched</strong> across Sales Enablement, L&amp;D, Marketing, HR, and AspenTech. AE feedback: <em>"most engaged group of 60+ people I've ever seen."</em> Result of an 8-month multi-threading campaign across 7 Emerson departments, navigating a 3-month IT/AI governance freeze before the enterprise deal cleared.
+    </div>
+  </div>
+
+  <!-- PERSONA HYPOTHESES -->
+  <div class="card">
+    <div class="card-header"><div class="card-header-dot"></div><div class="card-title">Persona Hypotheses</div></div>
+    <div class="card-body" style="padding:0">
+      <table class="hyp-table">
+        <thead><tr><th>Persona</th><th>Pain Point Hypothesis</th><th>Angle Used</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Sales Enablement Lead</td>
+            <td>Sales teams have complex products with fast-changing messaging; static enablement content goes stale before reps use it and recording-based training doesn't scale globally.</td>
+            <td>Multi-threaded into AspenTech and Emerson Sales Enablement simultaneously with the same use case: quicker to update, more consistent delivery at scale.</td>
+          </tr>
+          <tr>
+            <td>Global L&amp;D / Learning Manager</td>
+            <td>Emerson's 85K workforce spans 60+ countries; translating and adapting learning content per region is prohibitively expensive and slow with traditional production.</td>
+            <td>Pitched AI dubbing and avatar consistency as the unlock for global L&amp;D at scale; referenced similar enterprise wins.</td>
+          </tr>
+          <tr>
+            <td>Marketing / Internal Comms</td>
+            <td>Marketing and comms teams need polished video for campaigns, product launches, and internal announcements; agency timelines and costs are a constant blocker.</td>
+            <td>Identified multiple inbound Synthesia freemium signups from Emerson marketing and used them as warm signals to book discovery calls.</td>
+          </tr>
+          <tr>
+            <td>HR Transformation / People Ops</td>
+            <td>Global HR transformation programs require consistent messaging to employees across regions; video is the most effective channel but hardest to scale.</td>
+            <td>Targeted VP HR and People Ops with a change-management framing: Synthesia as the last mile of HR communication at scale.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CONTACTS + EMAIL/CALLS -->
+  <div class="two-col">
+
+    <div class="card" style="display:flex;flex-direction:column;height:100%">
+      <div class="card-header"><div class="card-header-dot"></div><div class="card-title">Key Contacts Booked</div></div>
+      <div class="card-body" style="padding:0;flex:1;display:flex;flex-direction:column">
+        <div style="flex:1;overflow-y:auto">
+        <table class="contacts-table">
+          <thead><tr><th>Name</th><th>Title / Role</th><th>Method · Date</th></tr></thead>
+          <tbody>
+            <tr><td>Adam Bird</td><td>Director, Business Transformation, Strategy &amp; Planning</td><td><span class="pill">Call</span> · Aug 18</td></tr>
+            <tr><td>Andres Zamora</td><td>Integrated Marketing Specialist, LATAM</td><td><span class="pill">Email → Call</span> · Oct 15</td></tr>
+            <tr><td>Maya Alvarez</td><td>Manager, Integrated Marketing Measurement Solutions, LATAM</td><td><span class="pill">LinkedIn</span> · Oct 15</td></tr>
+            <tr><td>Binesh Menon</td><td>Director, Learning &amp; Org Development, APAC</td><td><span class="pill">LinkedIn</span> · Oct 29</td></tr>
+            <tr><td>Dharanidharan Subramaniam</td><td>VP, Human Resources Transformation</td><td><span class="pill">LinkedIn</span> · Oct 29</td></tr>
+            <tr><td>Leah Stanley</td><td>Director, Portfolio Management</td><td><span class="pill">Freemium → Call</span> · Oct 29</td></tr>
+            <tr><td>Rebekah Daniel</td><td>Global Training Manager</td><td><span class="pill">LinkedIn</span> · Nov 5</td></tr>
+            <tr><td>Stephane Rioux</td><td>Director &amp; Global Lead, Partner Programs &amp; Operations, AspenTech</td><td><span class="pill">Call</span> · Nov 4</td></tr>
+            <tr><td>Ioana Urs</td><td>Sr. Training Lead, Emerson</td><td><span class="pill">Freemium → Call</span> · Nov 10</td></tr>
+            <tr><td>Neil Dalal</td><td>Sales Enablement Manager</td><td><span class="pill">Email</span> · Nov 10</td></tr>
+            <tr><td>Jay Gatz</td><td>VP, Commercial Execution &amp; Strategy</td><td><span class="pill">Email</span> · Nov 17</td></tr>
+            <tr><td>Belal Mohammed</td><td>Marketing Manager</td><td><span class="pill">Email</span> · Nov 19</td></tr>
+            <tr><td>Shahin Meah</td><td>VP, Marketing &amp; Lifecycle Services, Emerson Europe</td><td><span class="pill">Call</span> · Nov 24</td></tr>
+            <tr><td>Tim Richards</td><td>VP, Sales Enablement, AspenTech</td><td><span class="pill">Email</span> · Dec 1 &amp; Apr 30</td></tr>
+            <tr><td>Christin Piganell</td><td>L&amp;D / Learning Team Lead, Emerson</td><td><span class="pill">LinkedIn</span> · Jan 13</td></tr>
+            <tr><td>Sabina Lionte</td><td>L&amp;D / Learning Specialist, Emerson</td><td><span class="pill">LinkedIn</span> · Jan 13</td></tr>
+            <tr><td>Jamil Kabbani</td><td>Director, Digital Sales Enablement &amp; Strategic Pricing</td><td><span class="pill">Email</span> · Apr 30</td></tr>
+            <tr><td>Sri Valluri</td><td>Learning &amp; Development, Emerson</td><td><span class="pill">Email</span> · Apr 30</td></tr>
+            <tr><td>Priya Nair</td><td>Senior Order Administrator</td><td><span class="pill">LinkedIn</span> · Apr 30</td></tr>
+            <tr><td>Rob Maciejewski</td><td>VP, People Operations, AspenTech</td><td><span class="pill">Email</span> · Apr 30</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:16px">
+
+      <div class="card">
+        <div class="card-header"><div class="card-header-dot"></div><div class="card-title">Discovery &amp; Pilot Highlights (Gong)</div></div>
+        <div class="card-body" style="padding:0">
+          <div class="call-row">
+            <div class="call-date">Feb 2, 2026<div class="call-who">Emerson L&amp;D<br>Christin + Sabina</div><a class="call-link" href="https://synthesia.app.gong.io/call?id=3940891562032931693" target="_blank">↗ Gong</a></div>
+            <div class="call-score">●●●●●</div>
+            <div class="call-note">27m · Deep platform walkthrough — SCORM, translation review for Chinese, pricing at $5–8K/seat. Pricing fully aligned; Sabina committed to add budget item for May cycle. Only blocker: AI governance sign-off.</div>
+          </div>
+          <div class="call-row">
+            <div class="call-date">Jan 13, 2026<div class="call-who">Emerson L&amp;D<br>Christin + Sabina</div><a class="call-link" href="https://synthesia.app.gong.io/call?id=2560431864473022172" target="_blank">↗ Gong</a></div>
+            <div class="call-score">●●●●●</div>
+            <div class="call-note">39m · Discovery + demo. Pilot delayed by MSA/cybersecurity review. Team creates 6–7 micro-learning videos/year; closed in-person training center 2–3 years ago. Strong fit for AI dubbing and global localization. Scheduled deep demo with Casey in early Feb.</div>
+          </div>
+          <div class="call-row">
+            <div class="call-date">Dec 2, 2025<div class="call-who">Emerson (Technical)<br>Martin (MartBoo)</div><a class="call-link" href="https://synthesia.app.gong.io/call?id=8335017488703797833" target="_blank">↗ Gong</a></div>
+            <div class="call-score">●●●○○</div>
+            <div class="call-note">24m · Current pre-work is "boring slides with voiceover." Wants native language (French, German) for field teams. Prefers to let another team test first — will re-engage mid-Feb based on pilot results.</div>
+          </div>
+          <div class="call-row">
+            <div class="call-date">Nov 24, 2025<div class="call-who">Emerson Europe<br>Shahin Meah, VP Mktg</div><a class="call-link" href="https://synthesia.app.gong.io/call?id=7746075654196918567" target="_blank">↗ Gong</a></div>
+            <div class="call-score">●●●●●</div>
+            <div class="call-note">31m · VP, Marketing &amp; Lifecycle Services. AI dubbing cuts 1–2 month localization timeline to under 1 hour. Shahin called the platform "intuitive and impressive" — scheduled follow-up with content team. Reaching out to Adam Bird re: AI CoE pilot.</div>
+          </div>
+          <div class="call-row">
+            <div class="call-date">Nov 10, 2025<div class="call-who">Emerson Sales Enablement<br>Neil Dalal</div><a class="call-link" href="https://synthesia.app.gong.io/call?id=5807771982844974807" target="_blank">↗ Gong</a></div>
+            <div class="call-score">●●●●○</div>
+            <div class="call-note">26m · Sales Enablement Manager. Converting text-heavy playbooks to video for global third-party sellers. Analytics (watch time, engagement) was the #1 success metric — currently "flying blind." Pilot starting Nov 14 with Casey.</div>
+          </div>
+          <div class="call-row">
+            <div class="call-date">Nov 10, 2025<div class="call-who">Emerson LATAM Mktg<br>Maya Alvarez + Andres</div><a class="call-link" href="https://synthesia.app.gong.io/call?id=3534013810034920781" target="_blank">↗ Gong</a></div>
+            <div class="call-score">●●●●●</div>
+            <div class="call-note">32m · LATAM dubbing into Spanish &amp; Portuguese. Current Premiere workflow takes 1.5–2 hrs; Synthesia reduces to &lt;10 min. 4–5 pilot licenses requested (Andres, Maya, Camila, Allison, Kate). Friday pilot onboarding with Casey confirmed.</div>
+          </div>
+          <div class="call-row">
+            <div class="call-date">Nov 10, 2025<div class="call-who">Emerson L&amp;D<br>Ioana Urs, Sr. Training Lead</div><a class="call-link" href="https://synthesia.app.gong.io/call?id=1895519862017815913" target="_blank">↗ Gong</a></div>
+            <div class="call-score">●●●●○</div>
+            <div class="call-note">15m · Stack: Articulate, Camtasia, EasyGenerator, Clipchamp, 11Labs. Core pain: version control for evergreen content and inconsistent voices. Previous Synthesia sample failed on acronym pronunciation — Noah confirmed fix exists. Thursday demo with Casey booked.</div>
+          </div>
+          <div class="call-row">
+            <div class="call-date">Nov 5, 2025<div class="call-who">Emerson<br>Rebekah Daniel</div><a class="call-link" href="https://synthesia.app.gong.io/call?id=5584718145759542019" target="_blank">↗ Gong</a></div>
+            <div class="call-score">●●●●○</div>
+            <div class="call-note">29m · Building global training program from ground up. Only ~10% of content currently translated to Spanish; Asian dialect translation burden falls entirely on sales teams. Excited about AI dubbing. Full in-depth demo with Casey secured before Nov 14 pilot.</div>
+          </div>
+          <div class="call-row">
+            <div class="call-date">Nov 4, 2025<div class="call-who">AspenTech<br>Stephane Rioux, Dir.</div><a class="call-link" href="https://synthesia.app.gong.io/call?id=4404901407810736543" target="_blank">↗ Gong</a></div>
+            <div class="call-score">●●●○○</div>
+            <div class="call-note">10m · Director &amp; Global Lead, Partner Programs &amp; Operations. Video plays "zero role" currently — all training is live virtual or voiceover slides. Early-stage internal enablement project. Demo booked for Nov 17; pilot feasible from February.</div>
+          </div>
+          <div class="call-row">
+            <div class="call-date">Oct 29, 2025<div class="call-who">Emerson APAC L&amp;D<br>Binesh Menon</div><a class="call-link" href="https://synthesia.app.gong.io/call?id=3687948177100905657" target="_blank">↗ Gong</a></div>
+            <div class="call-score">●●●●○</div>
+            <div class="call-note">32m · APAC needs Chinese, Japanese, Korean translation — currently no video localization capability. Running AI conversation-sim pilot with 300 managers. Will share Synthesia with global L&D community; suggested Noah demo at their in-person St. Louis meeting in early 2026.</div>
+          </div>
+          <div class="call-row">
+            <div class="call-date">Oct 29, 2025<div class="call-who">Emerson Product Comms<br>Leah Stanley, Director</div><a class="call-link" href="https://synthesia.app.gong.io/call?id=5164431065787452028" target="_blank">↗ Gong</a></div>
+            <div class="call-score">●●●●○</div>
+            <div class="call-note">11m · Director, Portfolio Management. Primary use case: product explainers and instruction manual supplements. Previous team member (Tim McMahon) used personal Synthesia plan — content lost on departure. Enterprise workspace and multi-language (European + Chinese) confirmed as needs.</div>
+          </div>
+          <div class="call-row">
+            <div class="call-date">Oct 15, 2025<div class="call-who">Emerson LATAM Mktg<br>Andres Zamora</div><a class="call-link" href="https://synthesia.app.gong.io/call?id=770095622660695040" target="_blank">↗ Gong</a></div>
+            <div class="call-score">●●●●○</div>
+            <div class="call-note">34m · Integrated Marketing Specialist, LATAM. Adobe + 3rd-party AI voice tool, manual Premiere sync described as "very lengthy." Internal hurdle: another director pitched a competing tool. Despite this, ~10 users identified (team + 4 PMs + art director). Full demo with Casey booked Oct 29.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><div class="card-header-dot"></div><div class="card-title">Standout Outreach Email &mdash; Re-Engage After Governance Unblock</div></div>
+        <div class="card-body">
+          <div class="email-box">
+            <div class="email-subject">The governance blocker is cleared &mdash; pilot is live</div>
+            <div class="email-to">To: Christin Piganell, L&amp;D Team Lead, Emerson Electric</div>
+            <div class="email-body">Hi Christin,
+
+When we last spoke in February, everything was ready to go; you had a clear PoC in mind, pricing aligned, and a plan to start small. The only thing standing in the way was IT/AI governance sign-off.
+
+That's now done. Emerson just signed a company-wide agreement with Synthesia, and the pilot is officially kicking off.
+
+Given where we left things, I wanted to make sure you're looped in right away. Would it make sense to pick back up where we left off and get your L&D PoC underway as part of the broader rollout?
+
+Noah</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer">
+    <span><strong>Noah Butler</strong> &middot; Senior SDR, Synthesia &middot; noah.butler@synthesia.io</span>
+    <span><strong>Emerson Electric One-Pager</strong> &middot; May 2026</span>
+  </div>
+
+</div>
+</body>
+</html>

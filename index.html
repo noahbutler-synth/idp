@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Noah Butler — SDR Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --indigo-500: #3E57DA;
+    --indigo-300: #8098F9;
+    --indigo-200: #BCD0FF;
+    --indigo-50:  #EEF3FF;
+    --indigo-900: #1A2254;
+    --ink-900:    #0D0F2C;
+    --gray-700:   #595959;
+    --gray-100:   #EEEEEE;
+    --white:      #FFFFFF;
+    --shadow-sm:  0 4px 16px rgba(13,15,44,.08);
+    --shadow-md:  0 8px 28px rgba(13,15,44,.15);
+    --radius:     12px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', Arial, sans-serif;
+    background: #F5F6FA;
+    color: var(--ink-900);
+    font-size: 14px;
+    line-height: 1.55;
+    min-height: 100vh;
+    padding: 40px 24px;
+  }
+  .page { max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+
+  /* HEADER */
+  .header {
+    background: var(--ink-900);
+    border-radius: var(--radius);
+    padding: 32px 40px;
+    display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+    position: relative; overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute; right: -60px; top: -60px;
+    width: 300px; height: 300px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(62,87,218,.35) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header::after {
+    content: '';
+    position: absolute; left: 35%; bottom: -70px;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(128,152,249,.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-left { position: relative; z-index: 1; }
+  .header-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .08em; color: var(--indigo-300); text-transform: uppercase; margin-bottom: 8px; }
+  .header-title { font-size: 36px; font-weight: 700; color: var(--white); line-height: 1.15; margin-bottom: 10px; }
+  .header-title span { color: var(--indigo-300); }
+  .header-sub { font-size: 14px; color: rgba(255,255,255,.55); max-width: 480px; line-height: 1.6; }
+  .header-right { position: relative; z-index: 1; text-align: right; flex-shrink: 0; }
+  .badge { display: inline-block; background: rgba(62,87,218,.25); border: 1px solid rgba(62,87,218,.5); color: var(--indigo-200); font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 4px 12px; border-radius: 99px; margin-bottom: 8px; }
+  .role { font-size: 13px; color: rgba(255,255,255,.45); }
+  .name { font-size: 16px; font-weight: 700; color: var(--white); }
+
+  /* ACCOUNT CARDS GRID */
+  .accounts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 700px) { .accounts-grid { grid-template-columns: 1fr; } }
+
+  .account-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    display: flex; flex-direction: column;
+    transition: box-shadow .18s, transform .18s;
+  }
+  .account-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+
+  .card-top {
+    background: var(--ink-900);
+    padding: 20px 24px 16px;
+    position: relative; overflow: hidden;
+  }
+  .card-top::before {
+    content: '';
+    position: absolute; right: -20px; top: -20px;
+    width: 120px; height: 120px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(62,87,218,.3) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .card-industry { font-size: 10px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--indigo-300); margin-bottom: 4px; position: relative; z-index: 1; }
+  .card-company { font-size: 20px; font-weight: 700; color: var(--white); position: relative; z-index: 1; }
+
+  .card-body { padding: 16px 24px 20px; flex: 1; display: flex; flex-direction: column; gap: 12px; }
+
+  .card-metrics { display: flex; gap: 20px; flex-wrap: wrap; }
+  .card-metric-num { font-size: 20px; font-weight: 700; color: var(--indigo-500); line-height: 1; }
+  .card-metric-label { font-size: 10px; font-weight: 500; color: var(--gray-700); margin-top: 2px; }
+
+  .card-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    display: inline-block; background: var(--indigo-50); color: var(--indigo-500);
+    font-size: 10px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase;
+    padding: 3px 10px; border-radius: 99px; border: 1px solid var(--indigo-200);
+  }
+  .tag-green { background: #ECFDF5; color: #065F46; border-color: #A7F3D0; }
+
+  .card-cta {
+    margin-top: auto;
+    padding: 11px 24px;
+    background: var(--indigo-50);
+    border-top: 1px solid var(--indigo-200);
+    font-size: 12px; font-weight: 600; color: var(--indigo-500);
+    display: flex; align-items: center; justify-content: space-between;
+    transition: background .15s;
+  }
+  .account-card:hover .card-cta { background: var(--indigo-200); }
+  .card-cta::after { content: '→'; font-size: 14px; }
+
+  /* STANDOUT CARD - full width */
+  .standout-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    transition: box-shadow .18s, transform .18s;
+  }
+  .standout-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+  .standout-left {
+    background: linear-gradient(135deg, var(--indigo-900), var(--indigo-500));
+    padding: 24px 28px;
+    display: flex; flex-direction: column; justify-content: center;
+    min-width: 220px; flex-shrink: 0;
+  }
+  .standout-label { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--indigo-200); margin-bottom: 6px; }
+  .standout-title { font-size: 18px; font-weight: 700; color: var(--white); line-height: 1.3; }
+  .standout-right { padding: 24px 28px; flex: 1; display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
+  .standout-metric { text-align: center; }
+  .standout-metric-num { font-size: 26px; font-weight: 700; color: var(--indigo-500); line-height: 1; }
+  .standout-metric-label { font-size: 10px; font-weight: 500; color: var(--gray-700); margin-top: 3px; }
+  .standout-cta { margin-left: auto; background: var(--indigo-500); border: 1px solid var(--indigo-500); color: #fff; font-size: 12px; font-weight: 600; white-space: nowrap; padding: 9px 18px; border-radius: 8px; transition: background .15s; }
+  .standout-card:hover .standout-cta { background: var(--indigo-900); border-color: var(--indigo-900); }
+  .standout-cta::after { content: ' →'; }
+
+  /* IDP SHEET */
+  .section-label {
+    font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--gray-700); padding: 0 4px;
+  }
+  .sheet-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+  .sheet-header {
+    padding: 12px 20px;
+    background: var(--indigo-50);
+    border-bottom: 1px solid var(--indigo-200);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .sheet-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--indigo-500); flex-shrink: 0; }
+  .sheet-title { font-size: 11px; font-weight: 700; color: var(--indigo-500); text-transform: uppercase; letter-spacing: .08em; }
+  .sheet-frame { width: 100%; height: 600px; border: none; display: block; }
+
+  /* FOOTER */
+  .footer { display: flex; justify-content: space-between; align-items: center; padding: 12px 4px 0; border-top: 1px solid var(--gray-100); font-size: 11px; color: var(--gray-700); }
+  .footer strong { color: var(--ink-900); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <div class="header-eyebrow">SDR Portfolio</div>
+      <div class="header-title">Noah <span>Butler</span></div>
+      <div class="header-sub">Key account one-pagers, call highlights, and IDP — compiled in support of promotion from SDR to Account Executive at Synthesia.</div>
+    </div>
+    <div class="header-right">
+      <div class="badge">May 2026</div>
+      <div class="role">Senior SDR, Synthesia</div>
+      <div class="name">noah.butler@synthesia.io</div>
+    </div>
+  </div>
+
+  <!-- ACCOUNT CARDS -->
+  <div class="section-label">Account One-Pagers</div>
+  <div class="accounts-grid">
+
+    <a class="account-card" href="Quanta_Services_SDR_One_Pager.html">
+      <div class="card-top">
+        <div class="card-industry">Construction &amp; Engineering</div>
+        <div class="card-company">Quanta Services</div>
+      </div>
+      <div class="card-body">
+        <div class="card-metrics">
+          <div><div class="card-metric-num">$92K</div><div class="card-metric-label">Closed Won</div></div>
+          <div><div class="card-metric-num">21</div><div class="card-metric-label">Meetings Booked</div></div>
+          <div><div class="card-metric-num">20+</div><div class="card-metric-label">Subsidiaries Prospected</div></div>
+        </div>
+        <div class="card-tags">
+          <span class="tag tag-green">$92K Closed Won</span>
+          <span class="tag">9 Gong Calls</span>
+          <span class="tag">Multi-Subsidiary</span>
+        </div>
+        <div class="card-cta">View one-pager</div>
+      </div>
+    </a>
+
+    <a class="account-card" href="Emerson_Electric_SDR_One_Pager.html">
+      <div class="card-top">
+        <div class="card-industry">Manufacturing &amp; Industrial Automation</div>
+        <div class="card-company">Emerson Electric</div>
+      </div>
+      <div class="card-body">
+        <div class="card-metrics">
+          <div><div class="card-metric-num">95</div><div class="card-metric-label">Pilot Attendees</div></div>
+          <div><div class="card-metric-num">19</div><div class="card-metric-label">Meetings Booked</div></div>
+          <div><div class="card-metric-num">$70K</div><div class="card-metric-label">Active Opp ARR</div></div>
+        </div>
+        <div class="card-tags">
+          <span class="tag tag-green">CPO Sponsor</span>
+          <span class="tag">7 Depts Penetrated</span>
+          <span class="tag">12 Gong Calls</span>
+        </div>
+        <div class="card-cta">View one-pager</div>
+      </div>
+    </a>
+
+    <a class="account-card" href="World_Wide_Technology_SDR_One_Pager.html">
+      <div class="card-top">
+        <div class="card-industry">Technology Solutions &amp; IT Services</div>
+        <div class="card-company">World Wide Technology</div>
+      </div>
+      <div class="card-body">
+        <div class="card-metrics">
+          <div><div class="card-metric-num">$80K</div><div class="card-metric-label">Active Pilot ARR</div></div>
+          <div><div class="card-metric-num">31</div><div class="card-metric-label">Meetings Booked</div></div>
+          <div><div class="card-metric-num">11</div><div class="card-metric-label">Open Opps</div></div>
+        </div>
+        <div class="card-tags">
+          <span class="tag tag-green">2 Active Pilots</span>
+          <span class="tag">8+ Teams Enrolled</span>
+          <span class="tag">9 Gong Calls</span>
+        </div>
+        <div class="card-cta">View one-pager</div>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- ACCOMPLISHMENTS CARD -->
+  <div class="section-label">Performance Highlights</div>
+  <a class="standout-card" href="Standout_Meetings_SDR_One_Pager.html">
+    <div class="standout-left">
+      <div class="standout-label">Performance Highlights &amp; QBRs</div>
+      <div class="standout-title">Accomplishments</div>
+    </div>
+    <div class="standout-right">
+      <div class="standout-metric">
+        <div class="standout-metric-num">3×</div>
+        <div class="standout-metric-label">150%+ to Quota</div>
+      </div>
+      <div class="standout-metric">
+        <div class="standout-metric-num">$2.8M</div>
+        <div class="standout-metric-label">Pipeline Generated</div>
+      </div>
+      <div class="standout-metric">
+        <div class="standout-metric-num">$174K</div>
+        <div class="standout-metric-label">Q1 Closed Won</div>
+      </div>
+      <div class="standout-metric">
+        <div class="standout-metric-num">138</div>
+        <div class="standout-metric-label">SQOs Generated</div>
+      </div>
+      <div class="standout-cta">View highlights</div>
+    </div>
+  </a>
+
+  <!-- IDP SHEET -->
+  <div class="section-label">Individual Development Plan</div>
+  <div class="sheet-card">
+    <div class="sheet-header">
+      <div class="sheet-dot"></div>
+      <div class="sheet-title">Noah Butler IDP &mdash; AE Readiness</div>
+    </div>
+    <iframe
+      class="sheet-frame"
+      src="https://docs.google.com/spreadsheets/d/1uk5j2u5jnrTQzzEYZdW_O9sual6aXO7uM1CbCSzOIVY/htmlview?gid=934671186"
+      allowfullscreen>
+    </iframe>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <span><strong>Noah Butler</strong> &middot; Senior SDR, Synthesia &middot; noah.butler@synthesia.io</span>
+    <span>SDR Portfolio &middot; May 2026</span>
+  </div>
+
+</div>
+</body>
+</html>
