@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>World Wide Technology — SDR One-Pager</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --indigo-500: #3E57DA;
+    --indigo-300: #8098F9;
+    --indigo-200: #BCD0FF;
+    --indigo-50:  #EEF3FF;
+    --indigo-900: #1A2254;
+    --ink-900:    #0D0F2C;
+    --gray-700:   #595959;
+    --gray-100:   #EEEEEE;
+    --white:      #FFFFFF;
+    --shadow-sm:  0 4px 16px rgba(13,15,44,.08);
+    --radius:     12px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', Arial, sans-serif; background: #F5F6FA; color: var(--ink-900); font-size: 14px; line-height: 1.55; padding: 32px 24px; }
+  .page { max-width: 960px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+
+  .header { background: var(--ink-900); border-radius: var(--radius); padding: 28px 32px; display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; position: relative; overflow: hidden; }
+  .header::before { content: ''; position: absolute; right: -40px; top: -40px; width: 240px; height: 240px; border-radius: 50%; background: radial-gradient(circle, rgba(62,87,218,.3) 0%, transparent 70%); }
+  .header::after  { content: ''; position: absolute; left: 40%; bottom: -60px; width: 180px; height: 180px; border-radius: 50%; background: radial-gradient(circle, rgba(128,152,249,.15) 0%, transparent 70%); }
+  .header-left { position: relative; z-index: 1; }
+  .header-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .08em; color: var(--indigo-300); text-transform: uppercase; margin-bottom: 6px; }
+  .header-title { font-size: 30px; font-weight: 700; color: var(--white); line-height: 1.15; margin-bottom: 8px; }
+  .header-title span { color: var(--indigo-300); }
+  .header-meta { font-size: 12.5px; color: rgba(255,255,255,.5); display: flex; flex-wrap: wrap; gap: 6px 14px; }
+  .header-meta span::before { content: '·'; color: var(--indigo-300); margin-right: 14px; }
+  .header-meta span:first-child::before { display: none; }
+  .header-right { position: relative; z-index: 1; text-align: right; flex-shrink: 0; }
+  .badge { display: inline-block; background: rgba(62,87,218,.25); border: 1px solid rgba(62,87,218,.5); color: var(--indigo-200); font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 4px 10px; border-radius: 99px; margin-bottom: 8px; }
+  .ae-label { font-size: 12px; color: rgba(255,255,255,.4); }
+  .ae-name { font-size: 13px; font-weight: 600; color: var(--white); }
+
+  .metrics { display: grid; grid-template-columns: repeat(5, 1fr); background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow-sm); overflow: hidden; }
+  .metric { padding: 18px 12px; text-align: center; border-right: 1px solid var(--gray-100); }
+  .metric:last-child { border-right: none; }
+  .metric-num { font-size: 22px; font-weight: 700; color: var(--indigo-500); line-height: 1.1; margin-bottom: 4px; }
+  .metric-label { font-size: 10.5px; color: var(--gray-700); font-weight: 500; line-height: 1.3; }
+  .metric-num.amber { color: #D97706; }
+  .metric-num.green { color: #059669; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  .card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow-sm); overflow: hidden; }
+  .card-header { padding: 12px 20px; background: var(--indigo-50); border-bottom: 1px solid var(--indigo-200); display: flex; align-items: center; gap: 8px; }
+  .card-header-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--indigo-500); flex-shrink: 0; }
+  .card-title { font-size: 11px; font-weight: 700; color: var(--indigo-500); text-transform: uppercase; letter-spacing: .08em; }
+
+  .hyp-table { width: 100%; border-collapse: collapse; }
+  .hyp-table thead th { background: var(--ink-900); color: var(--white); font-size: 10.5px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; padding: 8px 10px; text-align: left; }
+  .hyp-table tbody tr:nth-child(even) { background: var(--indigo-50); }
+  .hyp-table tbody tr:nth-child(odd)  { background: var(--white); }
+  .hyp-table td { padding: 9px 10px; font-size: 12.5px; color: var(--gray-700); vertical-align: top; border-bottom: 1px solid var(--gray-100); }
+  .hyp-table td:first-child { font-weight: 600; color: var(--ink-900); width: 22%; }
+  .hyp-table td:nth-child(2) { width: 42%; }
+
+  .contacts-table { width: 100%; border-collapse: collapse; }
+  .contacts-scroll { max-height: 480px; overflow-y: auto; border-radius: 0 0 var(--radius) var(--radius); }
+  .contacts-table thead th { background: var(--ink-900); color: var(--white); font-size: 10.5px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; padding: 8px 12px; text-align: left; }
+  .contacts-table tbody tr:nth-child(even) { background: var(--gray-100); }
+  .contacts-table tbody tr:nth-child(odd)  { background: var(--white); }
+  .contacts-table td { padding: 7px 12px; font-size: 12px; color: var(--gray-700); vertical-align: top; border-bottom: 1px solid var(--gray-100); }
+  .contacts-table td:first-child { font-weight: 600; color: var(--ink-900); width: 24%; }
+  .contacts-table td:nth-child(2) { width: 34%; font-weight: 500; color: var(--indigo-900); }
+  .pill { display: inline-block; background: var(--indigo-50); color: var(--indigo-500); font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 2px 8px; border-radius: 99px; border: 1px solid var(--indigo-200); margin-top: 2px; }
+  .pill-green { background: #ECFDF5; color: #065F46; border-color: #A7F3D0; }
+  .pill-amber { background: #FFFBEB; color: #92400E; border-color: #FDE68A; }
+
+  /* Inbound banner */
+  .inbound-banner { background: linear-gradient(135deg, #1A2254, #3E57DA); border-radius: var(--radius); padding: 14px 20px; display: flex; align-items: center; gap: 16px; }
+  .inbound-icon { font-size: 24px; flex-shrink: 0; }
+  .inbound-text { color: white; font-size: 13px; line-height: 1.55; }
+  .inbound-text strong { color: #BCD0FF; }
+
+  .email-box { background: var(--indigo-50); border-left: 4px solid var(--indigo-500); border-radius: 0 var(--radius) var(--radius) 0; padding: 16px 18px; }
+  .email-subject { font-size: 13px; font-weight: 700; color: var(--ink-900); margin-bottom: 2px; }
+  .email-to { font-size: 11.5px; color: var(--gray-700); margin-bottom: 10px; }
+  .email-body { font-size: 12.5px; color: var(--indigo-900); line-height: 1.65; font-style: italic; white-space: pre-line; }
+
+  .call-row { display: grid; grid-template-columns: 130px 80px 1fr; border-bottom: 1px solid var(--gray-100); align-items: start; }
+  .call-row:last-child { border-bottom: none; }
+  /* Pilot banner */
+  .pilot-banner { background: linear-gradient(135deg, #065F46, #047857); border-radius: var(--radius); padding: 16px 24px; display: flex; align-items: center; gap: 20px; color: white; }
+  .pilot-stat { text-align: center; flex-shrink: 0; }
+  .pilot-stat-num { font-size: 36px; font-weight: 700; line-height: 1; }
+  .pilot-stat-label { font-size: 10.5px; font-weight: 600; opacity: .8; letter-spacing: .06em; text-transform: uppercase; }
+  .pilot-divider { width: 1px; background: rgba(255,255,255,.25); align-self: stretch; }
+  .pilot-text { font-size: 13px; line-height: 1.6; opacity: .92; }
+  .pilot-text strong { color: #6EE7B7; }
+
+  .call-date { padding: 10px 12px; font-size: 11.5px; font-weight: 600; color: var(--ink-900); }
+  .call-link { display: inline-block; margin-top: 4px; font-size: 10px; font-weight: 600; color: var(--indigo-500); text-decoration: none; letter-spacing: .03em; }
+  .call-link:hover { text-decoration: underline; }
+  .call-who { font-size: 10.5px; color: var(--gray-700); font-weight: 400; margin-top: 2px; }
+  .call-score { padding: 10px 8px; font-size: 13px; color: var(--indigo-500); letter-spacing: -1px; }
+  .call-note { padding: 10px 12px; font-size: 12.5px; color: var(--gray-700); line-height: 1.55; }
+  .call-row:nth-child(even) { background: var(--indigo-50); }
+  .call-row:nth-child(odd)  { background: var(--white); }
+
+  .footer { display: flex; justify-content: space-between; align-items: center; padding: 12px 0 0; border-top: 1px solid var(--gray-100); font-size: 11px; color: var(--gray-700); }
+  .footer strong { color: var(--ink-900); }
+
+  @media print { body { background: white; padding: 0; } .page { max-width: 100%; } .site-nav { display: none; } }
+  .site-nav { position: sticky; top: 0; z-index: 100; background: #fff; border-bottom: 1px solid var(--gray-100); display: flex; align-items: center; padding: 0 24px; }
+  .site-nav-home { font-size: 12px; font-weight: 600; color: var(--indigo-500); text-decoration: none; padding: 13px 16px 13px 0; border-right: 1px solid var(--gray-100); margin-right: 8px; flex-shrink: 0; }
+  .site-nav-home:hover { color: var(--indigo-900); }
+  .site-nav-tabs { display: flex; overflow-x: auto; }
+  .site-nav-tab { font-size: 12px; font-weight: 500; color: var(--gray-700); text-decoration: none; padding: 13px 14px; border-bottom: 2px solid transparent; white-space: nowrap; transition: color .15s; }
+  .site-nav-tab:hover { color: var(--ink-900); }
+  .site-nav-tab.active { color: var(--indigo-500); border-bottom-color: var(--indigo-500); font-weight: 600; }
+</style>
+</head>
+<body>
+<nav class="site-nav">
+  <a class="site-nav-home" href="index.html">← Portfolio</a>
+  <div class="site-nav-tabs">
+    <a class="site-nav-tab" href="Quanta_Services_SDR_One_Pager.html">Quanta Services</a>
+    <a class="site-nav-tab" href="Emerson_Electric_SDR_One_Pager.html">Emerson Electric</a>
+    <a class="site-nav-tab active" href="World_Wide_Technology_SDR_One_Pager.html">World Wide Technology</a>
+    <a class="site-nav-tab" href="Standout_Meetings_SDR_One_Pager.html">Accomplishments</a>
+  </div>
+</nav>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <div class="header-eyebrow">SDR One-Pager</div>
+      <div class="header-title">World Wide <span>Technology</span></div>
+      <div class="header-meta">
+        <span>Technology Solutions &amp; IT Services</span>
+        <span>$20B Revenue</span>
+        <span>10,000+ employees</span>
+        <span>Maryland Heights, MO</span>
+        <span>Apr 2025 &ndash; May 2026</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="badge">Account One-Pager</div>
+      <div class="ae-label">Account Executive</div>
+      <div class="ae-name">Casey Masciantonio</div>
+    </div>
+  </div>
+
+  <!-- METRICS -->
+  <div class="metrics">
+    <div class="metric"><div class="metric-num">2</div><div class="metric-label">Active Pilots</div></div>
+    <div class="metric"><div class="metric-num">$80K</div><div class="metric-label">Active Pilot ARR</div></div>
+    <div class="metric"><div class="metric-num">11</div><div class="metric-label">Open Opps</div></div>
+    <div class="metric"><div class="metric-num">31</div><div class="metric-label">Meetings Booked</div></div>
+    <div class="metric"><div class="metric-num green">8+</div><div class="metric-label">Teams in Pilot</div></div>
+  </div>
+
+<!-- PILOT BANNER -->
+  <div class="pilot-banner">
+    <div class="pilot-stat">
+      <div class="pilot-stat-num">8+</div>
+      <div class="pilot-stat-label">Teams Enrolled</div>
+    </div>
+    <div class="pilot-divider"></div>
+    <div class="pilot-text">
+      <strong>March 2026 &mdash; Enterprise pilot launched</strong> across Creative Tech / ATC, Employee Experience, Sales Enablement, Global AI, Identity Security, AI Practice, Supplier Enablement, and Customer Experience. Unlimited seats, 2–4 week run. Pilot sourced through <strong>9 months of multi-threading</strong> across 31 booked meetings — from a VP of Enterprise Excellence to a Chief Digital Advisor to a Global Head of Identity Security.
+    </div>
+  </div>
+
+  <!-- PERSONA HYPOTHESES -->
+  <div class="card">
+    <div class="card-header"><div class="card-header-dot"></div><div class="card-title">Persona Hypotheses</div></div>
+    <div class="card-body" style="padding:0">
+      <table class="hyp-table">
+        <thead><tr><th>Persona</th><th>Pain Point Hypothesis</th><th>Angle Used</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Business Development / AI Solutions</td>
+            <td>WWT is positioned as an AI transformation partner; BDMs need to demonstrate AI-native tools to enterprise clients quickly and credibly.</td>
+            <td>Positioned Synthesia as a tool WWT BDMs can use to create quick demo videos for AI advisory engagements: "show, don't tell" for client pitches.</td>
+          </tr>
+          <tr>
+            <td>Internal Comms / CX Onboarding</td>
+            <td>WWT onboards thousands of enterprise customers globally; static decks and long Zoom recordings are poor substitutes for scalable, repeatable enablement content.</td>
+            <td>Anchored to CX onboarding and internal comms use cases; booked Shelby Mulock (Sr. Manager CX Strategy) and Michelle Merrell (Manager CX Onboarding).</td>
+          </tr>
+          <tr>
+            <td>AI Strategy &amp; Digital Transformation</td>
+            <td>WWT's AI consulting practice needs demonstration assets and training materials that can be quickly updated as AI products evolve; long production cycles are a liability.</td>
+            <td>Targeted AI Directors with an "AI-native content at the speed of AI" message; identified 15+ Director-level AI contacts for ongoing outreach.</td>
+          </tr>
+          <tr>
+            <td>Chief AI Advisor / European Expansion</td>
+            <td>WWT's European AI practice needs localized, scalable content to support client engagements across languages and regions.</td>
+            <td>Tony Peretti (Chief AI Advisor, Europe) re-engaged after prior outreach; Noah booked a multi-stakeholder demo with 4 attendees the same day.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CONTACTS + EMAIL/CALLS -->
+  <div class="two-col">
+
+    <div class="card" style="display:flex;flex-direction:column;height:100%">
+      <div class="card-header"><div class="card-header-dot"></div><div class="card-title">Key Contacts Booked</div></div>
+      <div class="card-body" style="padding:0;flex:1;display:flex;flex-direction:column">
+        <div class="contacts-scroll" style="max-height:none;flex:1">
+        <table class="contacts-table">
+          <thead><tr><th>Name</th><th>Title / Role</th><th>Method · Date</th></tr></thead>
+          <tbody>
+            <tr><td>Joe Heron</td><td>Cyber Security &amp; AI Innovation Lead</td><td><span class="pill">LinkedIn → Call</span> · Jul 25</td></tr>
+            <tr><td>Josh Higgins</td><td>Global Sales Onboarding Manager</td><td><span class="pill">Call</span> · Aug 13</td></tr>
+            <tr><td>Joshua Balla-Muir</td><td>Technical Account Manager</td><td><span class="pill">Email</span> · Dec 1</td></tr>
+            <tr><td>Scott Cullum</td><td>Director, Creative Technology</td><td><span class="pill">Call</span> · Dec 9</td></tr>
+            <tr><td>Mike Trojecki</td><td>Area Vice President, AI Practice</td><td><span class="pill">Text</span> · Jan 16</td></tr>
+            <tr><td>Ralph Jovine</td><td>Chief Digital Advisor</td><td><span class="pill">LinkedIn</span> · Feb 20</td></tr>
+            <tr><td>Brad Eversgerd</td><td>Vice President, Enterprise Excellence</td><td><span class="pill">Email</span> · Feb 20</td></tr>
+            <tr><td>Bill Thompson</td><td>Senior Director, WWT</td><td><span class="pill">Call</span> · Feb 27</td></tr>
+            <tr><td>Derek Lohman</td><td>Product Innovation Team Operations</td><td><span class="pill">Email</span> · Feb 27</td></tr>
+            <tr><td>Naasief Edross</td><td>Chief Security Strategist</td><td><span class="pill">LinkedIn</span> · Feb 20</td></tr>
+            <tr><td>Bryan Rainey</td><td>Senior Manager, Supply Chain Training</td><td><span class="pill">LinkedIn</span> · Mar 4</td></tr>
+            <tr><td>Elizabeth Gattra</td><td>Senior Manager, AI Practice</td><td><span class="pill">Call</span> · Mar 5</td></tr>
+            <tr><td>Todd Neilson</td><td>Global Head of AI-Driven Identity Security Practice</td><td><span class="pill">LinkedIn</span> · Mar 5</td></tr>
+            <tr><td>Keith Linenberger</td><td>Area VP, US Air Force &amp; Space Force</td><td><span class="pill">LinkedIn</span> · Mar 6</td></tr>
+            <tr><td>Mark Whitworth</td><td>Principal Advisor</td><td><span class="pill">LinkedIn</span> · Mar 9</td></tr>
+            <tr><td>Laura Kuehner</td><td>Vice President, Customer Experience</td><td><span class="pill">Call</span> · Mar 10</td></tr>
+            <tr><td>Jessica Langston</td><td>Director of Leadership Development</td><td><span class="pill">Email</span> · Mar 11</td></tr>
+            <tr><td>Sachin Koshy</td><td>Senior Advisor, AI &amp; Automation Evangelist</td><td><span class="pill">Call</span> · Mar 11</td></tr>
+            <tr><td>Jessica McDonald</td><td>AI &amp; GS&amp;A Solutions Advisor</td><td><span class="pill">LinkedIn</span> · Mar 11</td></tr>
+            <tr><td>David Muhammad</td><td>Director, Digital &amp; AI Platform Solutions</td><td><span class="pill">LinkedIn</span> · Mar 11</td></tr>
+            <tr><td>Laurie Mattson</td><td>Manager, Instructional Design</td><td><span class="pill">Email</span> · Mar 11</td></tr>
+            <tr><td>Lani Sabol</td><td>Director, Supplier Enablement</td><td><span class="pill">Email</span> · Mar 12</td></tr>
+            <tr><td>Jordan Hildebrand</td><td>GS&amp;A (Cyber) Practice Director</td><td><span class="pill">Email</span> · Mar 16</td></tr>
+            <tr><td>John Lewis</td><td>Chief Technology Advisor, Head of Engineering</td><td><span class="pill">Call</span> · Mar 24</td></tr>
+            <tr><td>Shelby Mulock</td><td>Sr. Manager, CX Strategy &amp; Ops</td><td><span class="pill">Email</span> · Apr 1</td></tr>
+            <tr><td>Amanda Sturgeon</td><td>Success Director, Customer Experience</td><td><span class="pill">Email</span> · Apr 14</td></tr>
+            <tr><td>Michelle Merrel</td><td>Manager, Lead CX Onboarding</td><td><span class="pill">Email</span> · Apr 14</td></tr>
+            <tr><td>Kurt Fultz</td><td>Business Development Manager, AI Solutions</td><td><span class="pill">Email</span> · Apr 21</td></tr>
+            <tr><td>Tony Peretti</td><td>Chief AI Advisor</td><td><span class="pill">LinkedIn</span> · May 13</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:16px">
+
+      <div class="card">
+        <div class="card-header"><div class="card-header-dot"></div><div class="card-title">Key Calls &amp; Discovery Highlights (Gong)</div></div>
+        <div class="card-body" style="padding:0">
+          <div class="call-row">
+            <div class="call-date">Apr 21, 2026<div class="call-who">WWT Global AI<br>Kurt Fultz, BDM</div><a class="call-link" href="https://synthesia.app.gong.io/call?id=3796915666779943136" target="_blank">↗ Gong</a></div>
+            <div class="call-score">●●●●○</div>
+            <div class="call-note">26m · BDM of AI Solutions, GSNA team. Evaluates 200+ ISVs/OEMs annually. Identified robotics, digital twin, and computer vision as core use cases — GSNA owns content, no marketing bottleneck. Will connect with Derek Lohman (ATC) and loop in manager Jason for deeper demo.</div>
+          </div>
+          <div class="call-row">
+            <div class="call-date">Apr 1, 2026<div class="call-who">WWT CX<br>Shelby Mulock, Sr. Mgr</div><a class="call-link" href="https://synthesia.app.gong.io/call?id=903104661634673771" target="_blank">↗ Gong</a></div>
+            <div class="call-score">●●●●●</div>
+            <div class="call-note">26m · Key use case: automating 90-day customer onboarding (Michelle Merrill's team). Internal enablement gap confirmed for new employee ramp-up. Scheduled demo with Laura, Michelle, and WWT's video specialist Michael.</div>
+          </div>
+          <div class="call-row">
+            <div class="call-date">Mar 12, 2026<div class="call-who">WWT Supplier Enablement<br>Lani Sabol, Director</div><a class="call-link" href="https://synthesia.app.gong.io/call?id=3074555454610773134" target="_blank">↗ Gong</a></div>
+            <div class="call-score">●●●●○</div>
+            <div class="call-note">26m · Runs 10-month "Impact" program for small strategic suppliers. Going global — time zones and interactivity are blockers. Excited by AI role-play agent for Q&A. Pilot just launched; will discuss funding with Brad Eversgird. Joining pilot.</div>
+          </div>
+          <div class="call-row">
+            <div class="call-date">Mar 11, 2026<div class="call-who">WWT AI Platforms<br>David Muhammad, Director</div><a class="call-link" href="https://synthesia.app.gong.io/call?id=8920560946004191245" target="_blank">↗ Gong</a></div>
+            <div class="call-score">●●●●●</div>
+            <div class="call-note">25m · Director, Digital &amp; AI Platform Solutions. Strong AI push (Cognition, Glean, Nvidia, Microsoft, Windsurf). Referred Sam Schmiz, Susan Zai, Toby Gerber (Creative Directors, Experience Design) as ideal contacts. Confirmed pilot breadth: Sales Enablement, CX, Supplier Enablement, ATC, Employee Experience, GSP (resell). Wants to test with client-facing AI native engineering deck.</div>
+          </div>
+          <div class="call-row">
+            <div class="call-date">Mar 9, 2026<div class="call-who">WWT Cybersecurity<br>Mark Whitworth, Principal</div><a class="call-link" href="https://synthesia.app.gong.io/call?id=3259777837582230811" target="_blank">↗ Gong</a></div>
+            <div class="call-score">●●●○○</div>
+            <div class="call-note">13m · Principal Advisor, cybersecurity &amp; AI security. Co-author of the Armour AI security framework (NVIDIA + Texas A&M). Content currently outsourced to marketing/learning enablement — delays are a friction point. Invited to pilot kickoff. Use case: AI security training at scale for clients.</div>
+          </div>
+          <div class="call-row">
+            <div class="call-date">Mar 5, 2026<div class="call-who">WWT Identity Security<br>Todd Neilson, Global Head</div><a class="call-link" href="https://synthesia.app.gong.io/call?id=4301826488180676030" target="_blank">↗ Gong</a></div>
+            <div class="call-score">●●●●●</div>
+            <div class="call-note">17m · Previously used Synthesia for a side company (30–40 videos). Leadership tasked him to build sales enablement training for 35 OEM identity partners within a week. Got WWT corporate account for pilot. Referred Jordan Hildebrand (Director, Security Ops) for an intern onboarding "5x5" program use case.</div>
+          </div>
+          <div class="call-row">
+            <div class="call-date">Mar 5, 2026<div class="call-who">WWT AI Practice<br>Elizabeth Gattra, Sr. Mgr</div><a class="call-link" href="https://synthesia.app.gong.io/call?id=196307455219839924" target="_blank">↗ Gong</a></div>
+            <div class="call-score">●●●●●</div>
+            <div class="call-note">25m · Leads AI adoption &amp; literacy training for staff and clients. Currently spends <strong>40 hours to produce a 30-minute training video</strong>. AI content evolves fast — existing materials go stale constantly. Pilot access arranged; will test Synthesia head-to-head against Capsule.</div>
+          </div>
+          <div class="call-row">
+            <div class="call-date">Feb 18, 2026<div class="call-who">WWT Sales Enablement<br>Joshua Higgins, Global Mgr</div><a class="call-link" href="https://synthesia.app.gong.io/call?id=826654879859924129" target="_blank">↗ Gong</a></div>
+            <div class="call-score">●●●●○</div>
+            <div class="call-note">20m · Global Sales Onboarding Manager. Stack: MindTickle, 11 Labs, Articulate, Canva, Cornerstone. Manages onboarding across NA, UK, EMEA, APAC — regional content consistency is the core pain. 5-person team; 3 content creators joining pilot. Demo with manager Ashley + Zach booked Mar 2.</div>
+          </div>
+          <div class="call-row">
+            <div class="call-date">Jul 29, 2025<div class="call-who">WWT Cyber &amp; AI<br>Joe Heron, Innovation Lead</div><a class="call-link" href="https://synthesia.app.gong.io/call?id=778779798143516288" target="_blank">↗ Gong</a></div>
+            <div class="call-score">●●●●○</div>
+            <div class="call-note">15m · Original re-engagement after a prior failed pilot. Nassif (Chief Security Strategist) gave a "1000 percent" positive endorsement. WWT in an "entrepreneurial year" — building out training and adoption for full solution sales. Demo booked; groundwork for the eventual enterprise pilot laid here.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><div class="card-header-dot"></div><div class="card-title">Standout Post-Meeting Follow-Up Email</div></div>
+        <div class="card-body">
+          <div class="email-box">
+            <div class="email-subject">Synthesia &lt;&gt; WWT, Great speaking with you yesterday</div>
+            <div class="email-to">To: Kurt Fultz, Business Development Manager of AI Solutions, WWT</div>
+            <div class="email-body">Hi Kurt,
+
+Thanks for the time yesterday. Best-fit use case looks like short, updatable enablement videos for robotics, computer vision, and digital twin; so GSNA isn't waiting on marketing.
+
+Feel free to reach out to Derek Lohman to see how the ATC team is using it, then check calendars with Jason and send over a few dates. First full week of May or the week after works for us for a deeper demo.
+
+Cc'ing Casey; she runs point on the WWT partnership and can send over ATC examples plus broader footprint context.
+
+Appreciate it, talk soon.
+
+Noah</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer">
+    <span><strong>Noah Butler</strong> &middot; Senior SDR, Synthesia &middot; noah.butler@synthesia.io</span>
+    <span><strong>World Wide Technology One-Pager</strong> &middot; May 2026</span>
+  </div>
+
+</div>
+</body>
+</html>
